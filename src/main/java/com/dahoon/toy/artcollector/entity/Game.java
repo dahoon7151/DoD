@@ -1,5 +1,6 @@
 package com.dahoon.toy.artcollector.entity;
 
+import com.dahoon.toy.artcollector.common.enumeration.GameGenre;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -20,14 +21,17 @@ public class Game {
     @Column(nullable = false)
     private String title;
 
-    @Column
+    @Column(nullable = false)
     private String developers;
 
-    @Column
+    @Column(nullable = false)
     private String publisher;
 
-    @Column
+    @Column(nullable = false)
     private String releaseDate;
+
+    @Convert()
+    private List<GameGenre> gameGenreList;
 
     @OneToMany(mappedBy = "game", orphanRemoval = true)
     private List<Member> memberList = new ArrayList<>();
