@@ -5,6 +5,7 @@ class Steam:
         self.client = MongoClient('mongodb://localhost:27017/')
         self.db = self.client['DoD_Game']
         self.collection = self.db['Crawller_Steam']
+        self.collection.create_index([('id', 1)], unique=True)  # 인덱싱 수정 필요
 
     def insertMany(self, documents):
         print(documents)

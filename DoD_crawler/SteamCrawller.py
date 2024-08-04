@@ -31,8 +31,7 @@ rate_selector = 'div.responsive_search_name_combined > div.col.search_reviewscor
 
 # 스크롤 (일단 10회)
 scroll = driver.find_element(By.CSS_SELECTOR, 'body')
-
-for i in range(10):
+for i in range(15):
     scroll.send_keys(Keys.END)
     time.sleep(2)
 
