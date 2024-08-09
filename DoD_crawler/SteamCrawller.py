@@ -7,7 +7,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 
-import time
+# import time
 import logging
 from SteamCollection import Steam
 
@@ -31,7 +31,7 @@ rate_selector = 'div.responsive_search_name_combined > div.col.search_reviewscor
 
 # 스크롤
 scroll = driver.find_element(By.CSS_SELECTOR, 'body')
-for i in range(20):
+for i in range(50):
     wrap = wait.until(EC.presence_of_element_located((By.ID, "search_resultsRows")))
     game_info = wrap.find_elements(By.TAG_NAME,'a')
     log.info('a 태그 탐색 완료')
@@ -41,8 +41,8 @@ for i in range(20):
     if element:
         for game in game_info:
             ele = {}
-            ele['id'] = game.get_attribute('data-ds-appid')
-            if ele['id'] in db.existing_ids:
+            ele['steamId'] = game.get_attribute('data-ds-appid')
+            if ele['steamId'] in db.existing_ids:
                 continue  # 중복 체크
             ele['title'] = game.find_element(By.CLASS_NAME, 'title').text
             ele['url'] = game.get_attribute('href')
@@ -71,7 +71,7 @@ for i in range(20):
 
         if ele_list:
             db.insertMany(ele_list)
-            db.existing_ids.update(ele['id'] for ele in ele_list) # 중복id 리스트 업데이트
+            db.existing_ids.update(ele['steamId'] for ele in ele_list) # 중복id 리스트 업데이트
         ele_list = []
         
     scroll.send_keys(Keys.END)

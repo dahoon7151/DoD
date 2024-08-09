@@ -1,7 +1,7 @@
 package com.dahoon.toy.artcollector.repository;
 
-import com.dahoon.toy.artcollector.entity.Game;
-import org.springframework.data.jpa.repository.JpaRepository;
+import com.dahoon.toy.artcollector.document.Game;
+import org.springframework.data.mongodb.repository.MongoRepository;
 
-public interface GameRepository extends JpaRepository<Game, Long> {
+public interface GameRepository extends MongoRepository<Game, String> {
 }
