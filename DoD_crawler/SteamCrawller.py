@@ -29,7 +29,7 @@ wait = WebDriverWait(driver, 30)
 img_selector = 'div.col.search_capsule > img'
 rate_selector = 'div.responsive_search_name_combined > div.col.search_reviewscore.responsive_secondrow > span'
 
-# 스크롤
+# 스크롤(50회)
 scroll = driver.find_element(By.CSS_SELECTOR, 'body')
 for i in range(50):
     wrap = wait.until(EC.presence_of_element_located((By.ID, "search_resultsRows")))
