@@ -1,8 +1,11 @@
 package com.dahoon.toy.artcollector.document;
 
 import jakarta.persistence.Id;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+@Getter
 @Document(collation = "Crawler_Steam")
 public class Game {
     @Id
@@ -12,8 +15,7 @@ public class Game {
     private String url;
     private String img;
     private String release;
-    private String rate;
+    private String rate; // 0 ~ 100
     private String price;
     private String discount;
-
 }
