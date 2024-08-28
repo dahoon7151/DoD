@@ -1,6 +1,7 @@
 package com.dahoon.toy.artcollector.service;
 
 import com.dahoon.toy.artcollector.document.Game;
+import com.dahoon.toy.artcollector.dto.GameDto;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -10,7 +11,12 @@ import java.util.List;
 @Transactional
 public class GameService {
     @Transactional
-    public List<String> showGameList() { // 페이징 처리?
-        return
+    public List<GameDto> showGameList() {
+        return null;
+    }
+
+    @Transactional
+    public GameDto showGameInfo() {
+        return null;
     }
 }
