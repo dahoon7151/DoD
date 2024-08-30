@@ -1,6 +1,6 @@
-package com.dahoon.toy.artcollector.repository;
+package com.dahoon.toy.artcollector.mongo.repository;
 
-import com.dahoon.toy.artcollector.document.Game;
+import com.dahoon.toy.artcollector.mongo.document.Game;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
 import java.util.Optional;
