@@ -1,7 +1,6 @@
 package com.dahoon.toy.artcollector.repository;
 
 import com.dahoon.toy.artcollector.ArtcollectorApplication;
-import com.dahoon.toy.artcollector.common.config.MongoConfig;
 import com.dahoon.toy.artcollector.mongo.document.Game;
 import com.dahoon.toy.artcollector.mongo.repository.GameRepository;
 import org.assertj.core.api.Assertions;
@@ -21,8 +20,6 @@ import org.springframework.transaction.annotation.Transactional;
 @ActiveProfiles("test")
 @Transactional
 class GameRepositoryTest {
-//    @Mock
-//    Game game;
 
     @Autowired
     private GameRepository gameRepository;
