@@ -1,4 +1,4 @@
-package com.dahoon.toy.artcollector.mongo.document;
+package com.dahoon.toy.artcollector.game.document;
 
 import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
@@ -8,7 +8,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 @Getter
 @NoArgsConstructor
-@Document(collation = "Crawler_Steam")
+@Document(collection = "Crawler_Steam")
 public class Game {
     @Id
     private String _id;

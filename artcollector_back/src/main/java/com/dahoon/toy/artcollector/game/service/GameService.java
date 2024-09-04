@@ -1,8 +1,8 @@
-package com.dahoon.toy.artcollector.service;
+package com.dahoon.toy.artcollector.game.service;
 
-import com.dahoon.toy.artcollector.mongo.document.Game;
-import com.dahoon.toy.artcollector.dto.GameDto;
-import com.dahoon.toy.artcollector.mongo.repository.GameRepository;
+import com.dahoon.toy.artcollector.game.document.Game;
+import com.dahoon.toy.artcollector.game.dto.GameDto;
+import com.dahoon.toy.artcollector.game.mongorepository.GameRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;

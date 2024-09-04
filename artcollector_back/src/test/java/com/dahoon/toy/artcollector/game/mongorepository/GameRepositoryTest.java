@@ -1,12 +1,11 @@
-package com.dahoon.toy.artcollector.repository;
+package com.dahoon.toy.artcollector.game.mongorepository;
 
 import com.dahoon.toy.artcollector.ArtcollectorApplication;
-import com.dahoon.toy.artcollector.mongo.document.Game;
-import com.dahoon.toy.artcollector.mongo.repository.GameRepository;
+import com.dahoon.toy.artcollector.game.document.Game;
+import com.dahoon.toy.artcollector.game.mongorepository.GameRepository;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;

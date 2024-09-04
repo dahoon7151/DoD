@@ -1,9 +1,11 @@
-package com.dahoon.toy.artcollector.dto;
+package com.dahoon.toy.artcollector.game.dto;
 
-import com.dahoon.toy.artcollector.mongo.document.Game;
+import com.dahoon.toy.artcollector.game.document.Game;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
+@Getter
 public class GameDto {
     private String steamId;
     private String title;
