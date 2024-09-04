@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RestController
 @RequiredArgsConstructor
 @Slf4j
@@ -23,5 +25,12 @@ public class GameController {
         GameDto gameDto = gameService.showGameInfo(title);
 
         return ResponseEntity.status(HttpStatus.OK).body(gameDto);
+    }
+
+    @GetMapping("/search/{title}")
+    public ResponseEntity<List<GameDto>> searchGameTitle(@PathVariable(value = "title") String title) {
+        List<GameDto> gameDtoList = gameService.searchGame(title);
+
+        return ResponseEntity.status(HttpStatus.OK).body(gameDtoList);
     }
 }
