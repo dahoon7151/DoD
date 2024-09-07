@@ -1,4 +1,4 @@
-package com.dahoon.toy.artcollector.entity;
+package com.dahoon.toy.artcollector.member.entity;
 
 import jakarta.persistence.*;
 import lombok.*;

@@ -1,4 +1,4 @@
-package com.dahoon.toy.artcollector.service;
+package com.dahoon.toy.artcollector.post.service;
 
 import org.springframework.stereotype.Service;
 
