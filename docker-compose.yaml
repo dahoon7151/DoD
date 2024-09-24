@@ -1,0 +1,25 @@
+services:
+  mysql:
+    image: mysql
+    volumes:
+      - ./data:/var/lib/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD= dahoon@9912
+      - MYSQL_DATABASE= dod
+    ports:
+      - "3306:3306"
+  mongodb:
+    image: mongo
+    volumes:
+      - ./data:/var/lib/mongo
+    ports:
+      - "27017:27017"
+  spring:
+    build:
+      context: ./artcollector_back
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    depends_on:
+      - mysql
+
