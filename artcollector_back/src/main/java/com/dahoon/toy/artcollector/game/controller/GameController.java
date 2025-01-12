@@ -52,4 +52,12 @@ public class GameController {
 
         return ResponseEntity.status(HttpStatus.OK).body(gameDtoList);
     }
+
+    @GetMapping("/renew/steam")
+    @Operation(summary = "Steam 데이터 갱신", description = "Steam 플랫폼의 게임 데이터를 불러와 저장")
+    public ResponseEntity<String> renewSteam() {
+        // Steam GetApp API 적용
+
+        return ResponseEntity.status(HttpStatus.OK).body();
+    }
 }
