@@ -10,10 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -58,6 +55,20 @@ public class GameController {
     public ResponseEntity<String> renewSteam() {
         // Steam GetApp API 적용
 
-        return ResponseEntity.status(HttpStatus.OK).body();
+        return ResponseEntity.status(HttpStatus.OK).body(null);
+    }
+
+    @GetMapping("/rank/review")
+    @Operation(summary = "인기 리뷰 조회", description = "인기있는 상위 5개 리뷰의 정보 반환")
+    public ResponseEntity<> rankReview() {
+
+        return ResponseEntity.status(HttpStatus.OK).body(null);
+    }
+
+    @PostMapping("/review/{gameId}")
+    @Operation(summary = "리뷰 작성", description = "게임에 대한 리뷰글 작성")
+    public ResponseEntity<> writeReview() {
+
+        return ResponseEntity.status(HttpStatus.OK).body(null);
     }
 }
