@@ -5,6 +5,7 @@ import com.dahoon.toy.artcollector.game.service.GameService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.constraints.Null;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -60,14 +61,14 @@ public class GameController {
 
     @GetMapping("/rank/review")
     @Operation(summary = "인기 리뷰 조회", description = "인기있는 상위 5개 리뷰의 정보 반환")
-    public ResponseEntity<> rankReview() {
+    public ResponseEntity<?> rankReview() {
 
         return ResponseEntity.status(HttpStatus.OK).body(null);
     }
 
     @PostMapping("/review/{gameId}")
     @Operation(summary = "리뷰 작성", description = "게임에 대한 리뷰글 작성")
-    public ResponseEntity<> writeReview() {
+    public ResponseEntity<?> writeReview() {
 
         return ResponseEntity.status(HttpStatus.OK).body(null);
     }
