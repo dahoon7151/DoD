@@ -2,7 +2,6 @@ package com.dahoon.toy.artcollector.game.mongorepository;
 
 import com.dahoon.toy.artcollector.ArtcollectorApplication;
 import com.dahoon.toy.artcollector.game.document.Game;
-import com.dahoon.toy.artcollector.game.mongorepository.GameRepository;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -27,7 +26,7 @@ class GameRepositoryTest {
     public void findGameByPerfectTitle() {
         //Given
         String title = "PUBG: BATTLEGROUNDS";
-        Game game = gameRepository.findByTitle(title).orElse(null);
+        Game game = gameRepository.findByName(title).orElse(null);
 
         //When
 

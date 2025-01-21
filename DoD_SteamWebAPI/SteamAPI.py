@@ -10,6 +10,7 @@ COLLECTION_NAME = "Steam_Game"
 STEAM_API_URL = "https://api.steampowered.com/ISteamApps/GetAppList/v2/"
 
 def fetch_steam_apps():
+    """Steam Web API에서 앱 데이터를 가져옵니다."""
     try:
         response = requests.get(STEAM_API_URL)
         response.raise_for_status()  # HTTP 에러 발생 시 예외를 던짐
@@ -20,21 +21,25 @@ def fetch_steam_apps():
         return []
 
 def save_to_mongodb(apps):
+    """MongoDB에 앱 데이터를 저장합니다."""
     try:
         # MongoDB 클라이언트 연결
         client = MongoClient(MONGO_URI)
         db = client[DB_NAME]
         collection = db[COLLECTION_NAME]
 
-        # 기존 데이터 삭제 (옵션)
-        collection.delete_many({})
+        # 이미 저장된 appid 확인
+        existing_appids = set(doc["appid"] for doc in collection.find({}, {"appid": 1, "_id": 0}))
 
-        # MongoDB에 데이터 삽입
-        if apps:
-            collection.insert_many(apps)
-            print(f"{len(apps)} records inserted into MongoDB.")
+        # 새로운 앱만 필터링
+        new_apps = [app for app in apps if app["appid"] not in existing_appids]
+
+        # 새 데이터를 MongoDB에 삽입
+        if new_apps:
+            collection.insert_many(new_apps)
+            print(f"{len(new_apps)} new records inserted into MongoDB.")
         else:
-            print("No data to insert.")
+            print("No new data to insert.")
 
     except Exception as e:
         print(f"스팀 API MongoDB 저장 에러: {e}")
