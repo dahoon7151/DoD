@@ -26,7 +26,7 @@ class GameRepositoryTest {
     public void findGameByPerfectTitle() {
         //Given
         String title = "PUBG: BATTLEGROUNDS";
-        Game game = gameRepository.findByName(title).orElse(null);
+        Game game = gameRepository.findByTitle(title).orElse(null);
 
         //When
 

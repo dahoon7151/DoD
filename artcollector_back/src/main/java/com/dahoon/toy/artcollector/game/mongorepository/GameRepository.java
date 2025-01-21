@@ -11,9 +11,9 @@ import java.util.Optional;
 public interface GameRepository extends MongoRepository<Game, String> {
     Optional<Game> findBySteamId(String steamId);
 
-    Optional<Game> findByName(String title);
+    Optional<Game> findByTitle(String title);
 
-    Optional<List<Game>> findByNameContaining(String title);
+    Optional<List<Game>> findByTitleContaining(String title);
 
     Page<Game> findAll(Pageable pageable);
 }

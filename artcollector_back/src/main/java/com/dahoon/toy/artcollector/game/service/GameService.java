@@ -46,8 +46,8 @@ public class GameService {
     }
 
     @Transactional
-    public List<GameDto> searchGame(String name) {
-        List<Game> gameList = gameRepository.findByNameContaining(name).orElseThrow(() -> new IllegalArgumentException("해당 제목의 게임을 검색할 수 없습니다."));
+    public List<GameDto> searchGame(String title) {
+        List<Game> gameList = gameRepository.findByTitleContaining(title).orElseThrow(() -> new IllegalArgumentException("해당 제목의 게임을 검색할 수 없습니다."));
         log.info("해당 검색어 포함 게임 조회");
         List<GameDto> gameDtoList = new ArrayList<>();
         for (Game game : gameList) {

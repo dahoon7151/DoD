@@ -5,7 +5,6 @@ import com.dahoon.toy.artcollector.game.service.GameService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import jakarta.validation.constraints.Null;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -43,10 +42,10 @@ public class GameController {
         return ResponseEntity.status(HttpStatus.OK).body(gameDto);
     }
 
-    @GetMapping("/search/{name}")
+    @GetMapping("/search/{title}")
     @Operation(summary = "게임 검색", description = "사용자가 제목을 검색했을 때 해당 검색어가 포함된 제목의 게임 정보를 반환")
-    public ResponseEntity<List<GameDto>> searchGameName(@PathVariable(value = "name") String name) {
-        List<GameDto> gameDtoList = gameService.searchGame(name);
+    public ResponseEntity<List<GameDto>> searchGameName(@PathVariable(value = "title") String title) {
+        List<GameDto> gameDtoList = gameService.searchGame(title);
 
         return ResponseEntity.status(HttpStatus.OK).body(gameDtoList);
     }
