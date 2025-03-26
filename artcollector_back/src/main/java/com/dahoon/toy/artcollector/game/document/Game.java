@@ -1,36 +1,24 @@
 package com.dahoon.toy.artcollector.game.document;
 
 import jakarta.persistence.Id;
+import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Getter
-@NoArgsConstructor
-@Document(collection = "Crawler_Steam")
-public class Game {
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Document(collection = "Game_Summary")
+public class Game {  // 게임 목록 조회 성능 개선용 요약 문서
     @Id
-    private String _id;
+    private String id;
 
-    private String steamId;
-    private String title;
-    private String url;
-    private String img;
-    private String release;
-    private String rate; // 0 ~ 100
-    private String price;
-    private String discount;
+    private String appId;
+    private String name;
 
-    public Game(String _id, String steamId, String title, String url, String img, String release, String rate, String price, String discount) {
-        this._id = _id;
-        this.steamId = steamId;
-        this.title = title;
-        this.url = url;
-        this.img = img;
-        this.release = release;
-        this.rate = rate;
-        this.price = price;
-        this.discount = discount;
+    public Game(String appId, String name) {
+        this.appId = appId;
+        this.name = name;
     }
 }

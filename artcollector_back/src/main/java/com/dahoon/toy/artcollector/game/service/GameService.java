@@ -26,11 +26,7 @@ public class GameService {
     public Page<GameDto> showGameList(int page, int count, String order) {
         List<Sort.Order> sorts = new ArrayList<>();
         if (order.equals("abc")) {
-            sorts.add(Sort.Order.asc("title"));
-        } else if (order.equals("price")) {
-            sorts.add(Sort.Order.asc("price"));
-//        } else if (order.equals("rate")) {  // 기준 추후 추가
-//            sorts.add(Sort.Order.desc("rate"));
+            sorts.add(Sort.Order.asc("name"));
         } else {
             throw new IllegalArgumentException("잘못된 정렬 기준");
         }
