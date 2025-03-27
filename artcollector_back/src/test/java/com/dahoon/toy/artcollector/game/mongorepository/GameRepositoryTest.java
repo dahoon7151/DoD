@@ -12,9 +12,15 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.data.mongo.DataMongoTest;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.transaction.annotation.Transactional;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 @DataMongoTest
 @ActiveProfiles("test")
@@ -30,16 +36,39 @@ class GameRepositoryTest {
         gameRepository.save(new Game("103", "Cyberpunk"));
     }
 
-    @Test
-    public void findGameByPerfectTitle() {
-        //Given
-        String title = "PUBG: BATTLEGROUNDS";
-        Game game = gameRepository.findByTitle(title).orElse(null);
-
-        //When
-
-        //Then
-        Assertions.assertThat(game).isNotNull();
+    @AfterEach
+    void tearDown() {
+        gameRepository.deleteAll();
     }
 
+    @Test
+    void findAll_정상조회() {
+        // given
+        int page = 0;
+        int size = 2;
+        Sort sort = Sort.by(Sort.Order.asc("name"));
+        Pageable pageable = PageRequest.of(page, size, sort);
+
+        // when
+        Page<Game> result = gameRepository.findAll(pageable);
+
+        // then
+        assertThat(result.getContent()).hasSize(2);
+        assertThat(result.getTotalElements()).isEqualTo(3);
+        assertThat(result.getContent().get(0).getName()).isEqualTo("Among Us");
+        assertThat(result.getContent().get(1).getName()).isEqualTo("Cyberpunk");
+    }
+
+    @Test
+    void findAll_두번째페이지() {
+        // given
+        Pageable pageable = PageRequest.of(1, 2, Sort.by(Sort.Order.asc("name")));
+
+        // when
+        Page<Game> result = gameRepository.findAll(pageable);
+
+        // then
+        assertThat(result.getContent()).hasSize(1);
+        assertThat(result.getContent().get(0).getName()).isEqualTo("Zelda");
+    }
 }

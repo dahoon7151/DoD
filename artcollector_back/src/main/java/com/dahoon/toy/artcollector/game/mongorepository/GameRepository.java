@@ -9,11 +9,11 @@ import java.util.List;
 import java.util.Optional;
 
 public interface GameRepository extends MongoRepository<Game, String> {
-    Optional<Game> findBySteamId(String steamId);
-
-    Optional<Game> findByTitle(String title);
-
-    Optional<List<Game>> findByTitleContaining(String title);
+//    Optional<Game> findByAppId(String steamId);
+//
+//    Optional<Game> findByTitle(String title);
+//
+//    Optional<List<Game>> findByTitleContaining(String title);
 
     Page<Game> findAll(Pageable pageable);
 }

@@ -7,8 +7,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Getter
 public class GameDto {
-    private String steamId;
-    private String title;
+    private String appId;
+    private String name;
     private String url;
     private String img;
     private String release;
@@ -17,13 +17,13 @@ public class GameDto {
     private String discount;
 
     public GameDto(Game game) {
-        this.steamId = game.getSteamId();
-        this.title = game.getTitle();
-        this.url = game.getUrl();
-        this.img = game.getImg();
-        this.release = game.getRelease();
-        this.rate = game.getRate();
-        this.price = game.getPrice();
-        this.discount = game.getDiscount();
+        this.appId = game.getAppId();
+        this.name = game.getName();
+//        this.url = game.getUrl();
+//        this.img = game.getImg();
+//        this.release = game.getRelease();
+//        this.rate = game.getRate();
+//        this.price = game.getPrice();
+//        this.discount = game.getDiscount();
     }
 }

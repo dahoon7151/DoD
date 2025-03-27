@@ -52,8 +52,8 @@ class GameServiceTest {
 
         // then
         assertThat(result).hasSize(2);
-        assertThat(result.getContent().get(0).getTitle()).isEqualTo("titleA");
-        assertThat(result.getContent().get(1).getTitle()).isEqualTo("titleB");
+        assertThat(result.getContent().get(0).getName()).isEqualTo("titleA");
+        assertThat(result.getContent().get(1).getName()).isEqualTo("titleB");
 
         verify(gameRepository).findAll(expectedPageable);
     }

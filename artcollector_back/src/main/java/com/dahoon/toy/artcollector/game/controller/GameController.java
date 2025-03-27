@@ -34,41 +34,41 @@ public class GameController {
         return ResponseEntity.status(HttpStatus.OK).body(gamePage);
     }
 
-    @GetMapping("/find/{id}")
-    @Operation(summary = "게임 상세정보", description = "SteamId를 통해 사용자가 선택한 게임의 상세 정보 반환")
-    public ResponseEntity<GameDto> findOneGame(@PathVariable(value = "id") String steamId) {
-        GameDto gameDto = gameService.showGameInfo(steamId);
-
-        return ResponseEntity.status(HttpStatus.OK).body(gameDto);
-    }
-
-    @GetMapping("/search/{title}")
-    @Operation(summary = "게임 검색", description = "사용자가 제목을 검색했을 때 해당 검색어가 포함된 제목의 게임 정보를 반환")
-    public ResponseEntity<List<GameDto>> searchGameName(@PathVariable(value = "title") String title) {
-        List<GameDto> gameDtoList = gameService.searchGame(title);
-
-        return ResponseEntity.status(HttpStatus.OK).body(gameDtoList);
-    }
-
-    @GetMapping("/renew/steam")
-    @Operation(summary = "Steam 데이터 갱신", description = "Steam 플랫폼의 게임 데이터를 불러와 저장")
-    public ResponseEntity<String> renewSteam() {
-        // Steam GetApp API 적용
-
-        return ResponseEntity.status(HttpStatus.OK).body(null);
-    }
-
-    @GetMapping("/rank/review")
-    @Operation(summary = "인기 리뷰 조회", description = "인기있는 상위 5개 리뷰의 정보 반환")
-    public ResponseEntity<?> rankReview() {
-
-        return ResponseEntity.status(HttpStatus.OK).body(null);
-    }
-
-    @PostMapping("/review/{gameId}")
-    @Operation(summary = "리뷰 작성", description = "게임에 대한 리뷰글 작성")
-    public ResponseEntity<?> writeReview() {
-
-        return ResponseEntity.status(HttpStatus.OK).body(null);
-    }
+//    @GetMapping("/find/{id}")
+//    @Operation(summary = "게임 상세정보", description = "SteamId를 통해 사용자가 선택한 게임의 상세 정보 반환")
+//    public ResponseEntity<GameDto> findOneGame(@PathVariable(value = "id") String steamId) {
+//        GameDto gameDto = gameService.showGameInfo(steamId);
+//
+//        return ResponseEntity.status(HttpStatus.OK).body(gameDto);
+//    }
+//
+//    @GetMapping("/search/{title}")
+//    @Operation(summary = "게임 검색", description = "사용자가 제목을 검색했을 때 해당 검색어가 포함된 제목의 게임 정보를 반환")
+//    public ResponseEntity<List<GameDto>> searchGameName(@PathVariable(value = "title") String title) {
+//        List<GameDto> gameDtoList = gameService.searchGame(title);
+//
+//        return ResponseEntity.status(HttpStatus.OK).body(gameDtoList);
+//    }
+//
+//    @GetMapping("/renew/steam")
+//    @Operation(summary = "Steam 데이터 갱신", description = "Steam 플랫폼의 게임 데이터를 불러와 저장")
+//    public ResponseEntity<String> renewSteam() {
+//        // Steam GetApp API 적용
+//
+//        return ResponseEntity.status(HttpStatus.OK).body(null);
+//    }
+//
+//    @GetMapping("/rank/review")
+//    @Operation(summary = "인기 리뷰 조회", description = "인기있는 상위 5개 리뷰의 정보 반환")
+//    public ResponseEntity<?> rankReview() {
+//
+//        return ResponseEntity.status(HttpStatus.OK).body(null);
+//    }
+//
+//    @PostMapping("/review/{gameId}")
+//    @Operation(summary = "리뷰 작성", description = "게임에 대한 리뷰글 작성")
+//    public ResponseEntity<?> writeReview() {
+//
+//        return ResponseEntity.status(HttpStatus.OK).body(null);
+//    }
 }
