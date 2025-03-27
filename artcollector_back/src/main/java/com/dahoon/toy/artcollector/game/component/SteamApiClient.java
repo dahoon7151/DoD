@@ -1,6 +1,7 @@
 package com.dahoon.toy.artcollector.game.component;
 
 import com.dahoon.toy.artcollector.game.document.GameDetail;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -8,6 +9,7 @@ import org.springframework.web.reactive.function.client.WebClient;
 import java.util.Map;
 
 @Component
+@Slf4j
 public class SteamApiClient {
     private final WebClient webClient;
 
@@ -27,6 +29,7 @@ public class SteamApiClient {
         Map<String, Object> appData = (Map<String, Object>) response.get(String.valueOf(appid));
         boolean success = (boolean) appData.get("success");
         Map<String, Object> data = success ? (Map<String, Object>) appData.get("data") : null;
+        log.info("Steam Web API 호출 - 게임 제목 : {}", data.get("name"));
 
         return GameDetail.builder()
                 .platform("Steam")
