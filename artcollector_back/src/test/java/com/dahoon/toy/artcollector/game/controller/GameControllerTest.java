@@ -1,11 +1,13 @@
 package com.dahoon.toy.artcollector.game.controller;
 
+import com.dahoon.toy.artcollector.common.config.SecurityConfig;
 import com.dahoon.toy.artcollector.game.dto.GameDto;
 import com.dahoon.toy.artcollector.game.service.GameService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.context.annotation.Import;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
@@ -20,6 +22,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(GameController.class)
+@Import(SecurityConfig.class)
 class GameControllerTest {
 
     @Autowired
@@ -44,10 +47,10 @@ class GameControllerTest {
         given(gameService.showGameList(page, count, order)).willReturn(gamePage);
 
         // when & then
-        mockMvc.perform(get("/showlist/{page}/{order}", page, order))
+        mockMvc.perform(get("/api/games/showlist/{page}/{order}", page, order))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.content[0].title").value("Game A"))
-                .andExpect(jsonPath("$.content[1].title").value("Game B"))
+                .andExpect(jsonPath("$.content[0].name").value("Game A"))
+                .andExpect(jsonPath("$.content[1].name").value("Game B"))
                 .andExpect(jsonPath("$.content.length()").value(2));
     }
 }

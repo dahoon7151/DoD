@@ -17,7 +17,7 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @Slf4j
-@RequestMapping("/api/game")
+@RequestMapping("/api/games")
 @Tag(name = "Game API")
 public class GameController {
     private final GameService gameService;
