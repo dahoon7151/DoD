@@ -15,7 +15,7 @@ import org.springframework.data.mongodb.repository.config.EnableMongoRepositorie
 @Configuration
 @RequiredArgsConstructor
 @EnableMongoAuditing
-@EnableMongoRepositories(basePackages = "com.dahoon.toy.artcollector.game.mongorepository")
+@EnableMongoRepositories(basePackages = "com.dahoon.toy.artcollector.game.repository")
 public class MongoConfig {
     private final MongoMappingContext mongoMappingContext;
 

@@ -25,7 +25,7 @@ public class GameController {
     @GetMapping("/showlist/{page}/{order}")
     @Operation(summary = "게임 리스트 조회", description = "요청한 페이지에 해당하는 게임정보들을 정렬하여 반환")
     @Parameter(name = "page", description = "현재 페이지 번호")
-    @Parameter(name = "order", description = "정렬 기준", example = "abc,price,rate")
+    @Parameter(name = "order", description = "정렬 기준", example = "abc")
     public ResponseEntity<Page<GameDto>> showGameList(@PathVariable(value = "page") int page,
                                                       @PathVariable(value = "order") String order) {
         int count = 10; // 한 페이지에 노출되는 게임 개수

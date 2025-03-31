@@ -1,12 +1,9 @@
-package com.dahoon.toy.artcollector.game.mongorepository;
+package com.dahoon.toy.artcollector.game.repository;
 
 import com.dahoon.toy.artcollector.game.document.Game;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.mongodb.repository.MongoRepository;
-
-import java.util.List;
-import java.util.Optional;
 
 public interface GameRepository extends MongoRepository<Game, String> {
 //    Optional<Game> findByAppId(String steamId);
