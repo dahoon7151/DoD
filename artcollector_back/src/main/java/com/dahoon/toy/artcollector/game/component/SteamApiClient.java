@@ -29,11 +29,15 @@ public class SteamApiClient {
         Map<String, Object> appData = (Map<String, Object>) response.get(String.valueOf(appid));
         boolean success = (boolean) appData.get("success");
         Map<String, Object> data = success ? (Map<String, Object>) appData.get("data") : null;
-        log.info("Steam Web API 호출 - 게임 제목 : {}", data.get("name"));
+        if (success) {
+            log.info("Steam Web API 호출 성공 - 게임 제목 : {}", data.get("name"));
+        } else {
+            log.info("Steam Web API 호출 실패");
+        }
 
         return GameDetail.builder()
                 .platform("Steam")
-                .success(true)
+                .success(success)
                 .data(data)
                 .build();
     }

@@ -1,5 +1,6 @@
 package com.dahoon.toy.artcollector.game.controller;
 
+import com.dahoon.toy.artcollector.game.dto.GameDetailDto;
 import com.dahoon.toy.artcollector.game.dto.GameDto;
 import com.dahoon.toy.artcollector.game.service.GameService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -22,26 +23,27 @@ import java.util.List;
 public class GameController {
     private final GameService gameService;
 
-    @GetMapping("/showlist/{page}/{order}")
-    @Operation(summary = "게임 리스트 조회", description = "요청한 페이지에 해당하는 게임정보들을 정렬하여 반환")
+    @GetMapping("/{page}/{count}/{order}")
+    @Operation(summary = "게임 목록 조회", description = "요청한 조건에 해당하는 게임 목록을 정렬하여 반환")
     @Parameter(name = "page", description = "현재 페이지 번호")
+    @Parameter(name = "count", description = "데이터 수")
     @Parameter(name = "order", description = "정렬 기준", example = "abc")
     public ResponseEntity<Page<GameDto>> showGameList(@PathVariable(value = "page") int page,
+                                                      @PathVariable(value = "count") int count,
                                                       @PathVariable(value = "order") String order) {
-        int count = 10; // 한 페이지에 노출되는 게임 개수
         Page<GameDto> gamePage = gameService.showGameList(page,count,order);
 
         return ResponseEntity.status(HttpStatus.OK).body(gamePage);
     }
 
-//    @GetMapping("/find/{id}")
-//    @Operation(summary = "게임 상세정보", description = "SteamId를 통해 사용자가 선택한 게임의 상세 정보 반환")
-//    public ResponseEntity<GameDto> findOneGame(@PathVariable(value = "id") String steamId) {
-//        GameDto gameDto = gameService.showGameInfo(steamId);
-//
-//        return ResponseEntity.status(HttpStatus.OK).body(gameDto);
-//    }
-//
+    @GetMapping("/{id}")
+    @Operation(summary = "게임 상세정보", description = "게임 Id를 통해 사용자가 선택한 게임의 상세 정보 반환")
+    public ResponseEntity<GameDto> findOneGame(@PathVariable(value = "id") String id) {
+        GameDetailDto gameDetailDto = gameService.getSteamGameDetail(id);
+
+        return ResponseEntity.status(HttpStatus.OK).body(gameDto);
+    }
+
 //    @GetMapping("/search/{title}")
 //    @Operation(summary = "게임 검색", description = "사용자가 제목을 검색했을 때 해당 검색어가 포함된 제목의 게임 정보를 반환")
 //    public ResponseEntity<List<GameDto>> searchGameName(@PathVariable(value = "title") String title) {

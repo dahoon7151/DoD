@@ -35,8 +35,8 @@ class GameControllerTest {
     void showGameList_성공() throws Exception {
         // given
         int page = 1;
-        String order = "abc";
         int count = 10;
+        String order = "abc";
 
         List<GameDto> gameList = List.of(
                 new GameDto("1L", "Game A"),
@@ -47,7 +47,7 @@ class GameControllerTest {
         given(gameService.showGameList(page, count, order)).willReturn(gamePage);
 
         // when & then
-        mockMvc.perform(get("/api/games/showlist/{page}/{order}", page, order))
+        mockMvc.perform(get("/api/games/{page}/{count}/{order}", page, count, order))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.content[0].name").value("Game A"))
                 .andExpect(jsonPath("$.content[1].name").value("Game B"))
