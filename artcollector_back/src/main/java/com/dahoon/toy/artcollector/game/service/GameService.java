@@ -3,6 +3,7 @@ package com.dahoon.toy.artcollector.game.service;
 import com.dahoon.toy.artcollector.game.component.SteamApiClient;
 import com.dahoon.toy.artcollector.game.document.Game;
 import com.dahoon.toy.artcollector.game.document.GameDetail;
+import com.dahoon.toy.artcollector.game.dto.GameDetailDto;
 import com.dahoon.toy.artcollector.game.dto.GameDto;
 import com.dahoon.toy.artcollector.game.repository.GameDetailRepository;
 import com.dahoon.toy.artcollector.game.repository.GameRepository;
@@ -37,21 +38,15 @@ public class GameService {
         Pageable pageable = PageRequest.of(page, count, Sort.by(sorts));
         Page<Game> gamePages = gameRepository.findAll(pageable);
 
-        return gamePages.map(GameDto::new);
+        return gamePages.map(GameDto::toDto);
     }
 
     @Transactional
-    public GameDetail getSteamGameDetail(String id) {
-        return gameDetailRepository.findById(id)
-                .orElseGet(() -> {
-                    GameDetail detail = steamApiClient.fetchGameDetail(appid);
+    public GameDetailDto getSteamGameDetail(String id, String appid) {
+        GameDetail gameDetail = gameDetailRepository.findById(id)
+                .orElseGet(() -> steamApiClient.fetchGameDetail(Long.valueOf(appid)));
 
-                    // 일단 저장은 생략 또는 로그로 표시
-                    // detailRepository.save(detail);  ← 이 줄은 메시지 큐 붙이면서 대체
-                    System.out.println("저장 생략 (추후 RabbitMQ로 처리): " + id);
-
-                    return detail;
-                });
+        return GameDetailDto.toDto(gameDetail);
     }
 
 //    @Transactional

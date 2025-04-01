@@ -18,14 +18,9 @@ public class GameDto {
 //    private String price;
 //    private String discount;
 
-    public GameDto(Game game) {
-        this.appId = game.getAppId();
-        this.name = game.getName();
-//        this.url = game.getUrl();
-//        this.img = game.getImg();
-//        this.release = game.getRelease();
-//        this.rate = game.getRate();
-//        this.price = game.getPrice();
-//        this.discount = game.getDiscount();
+    public static GameDto toDto(Game game) {
+        return new GameDto(
+                game.getAppId(),
+                game.getName());
     }
 }

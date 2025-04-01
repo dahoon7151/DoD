@@ -16,7 +16,7 @@ public class GameDetail {
     private String id;
 
     private String platform;
-    private boolean success;
+    private Boolean success;
 
     private Map<String, Object> data;
 }

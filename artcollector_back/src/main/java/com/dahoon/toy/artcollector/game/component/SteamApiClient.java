@@ -36,6 +36,7 @@ public class SteamApiClient {
         }
 
         return GameDetail.builder()
+                .id("steam_" + appid)
                 .platform("Steam")
                 .success(success)
                 .data(data)
