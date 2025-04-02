@@ -27,50 +27,30 @@ public class RabbitmqConfig {
     @Value("${spring.rabbitmq.password}")
     private String rabbitmqPassword;
 
-    @Value("${rabbitmq.queue.name}")
-    private String queueName;
+    @Value("${rabbitmq.queue.game.save}")
+    private String gameDetailQueueName;
 
-    @Value("${rabbitmq.exchange.name}")
-    private String exchangeName;
+    @Value("${rabbitmq.exchange.game}")
+    private String gameExchangeName;
 
-    @Value("${rabbitmq.routing.key}")
-    private String routingKey;
+    @Value("${rabbitmq.routing.game.save}")
+    private String gameDetailRoutingKey;
 
-    /** 지정된 큐 이름으로 Queue 빈을 생성
-     *
-     * @return Queue 빈 객체
-     */
     @Bean
-    public Queue queue() {
-        return new Queue(queueName);
+    public Queue gameDetailQueue() {
+        return new Queue(gameDetailQueueName, true);
     }
 
-    /** 지정된 exchange 이름으로 DirectExchange 빈을 생성
-     *
-     * @return TopicExchange 빈 객체
-     */
     @Bean
-    public DirectExchange exchange() {
-        return new DirectExchange(exchangeName);
+    public DirectExchange gameExchange() {
+        return new DirectExchange(gameExchangeName);
     }
 
-    /**
-     * 주어진 queue와 exchange를 바인딩하고 라우팅 키를 이용하여 Binding 빈을 생성
-     *
-     * @param queue    바인딩할 Queue
-     * @param exchange 바인딩할 TopicExchange
-     * @return Binding 빈 객체
-     */
     @Bean
-    public Binding binding(Queue queue, DirectExchange exchange) {
-        return BindingBuilder.bind(queue).to(exchange).with(routingKey);
+    public Binding gameDetailBinding() {
+        return BindingBuilder.bind(gameDetailQueue()).to(gameExchange()).with(gameDetailRoutingKey);
     }
 
-    /**
-     * RabbitMQ 연결을 위한 ConnectionFactory 빈을 생성하여 반환
-     *
-     * @return ConnectionFactory 객체
-     */
     @Bean
     public ConnectionFactory connectionFactory() {
         CachingConnectionFactory connectionFactory = new CachingConnectionFactory();
@@ -81,16 +61,9 @@ public class RabbitmqConfig {
         return connectionFactory.getRabbitConnectionFactory();
     }
 
-    /**
-     * RabbitTemplate을 생성하여 반환
-     *
-     * @param connectionFactory RabbitMQ와의 연결을 위한 ConnectionFactory 객체
-     * @return RabbitTemplate 객체
-     */
     @Bean
     public RabbitTemplate rabbitTemplate(org.springframework.amqp.rabbit.connection.ConnectionFactory connectionFactory) {
         RabbitTemplate rabbitTemplate = new RabbitTemplate(connectionFactory);
-        // JSON 형식의 메시지를 직렬화하고 역직렬할 수 있도록 설정
         rabbitTemplate.setMessageConverter(jackson2JsonMessageConverter());
         return rabbitTemplate;
     }

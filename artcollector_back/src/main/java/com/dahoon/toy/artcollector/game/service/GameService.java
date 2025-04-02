@@ -5,6 +5,7 @@ import com.dahoon.toy.artcollector.game.document.Game;
 import com.dahoon.toy.artcollector.game.document.GameDetail;
 import com.dahoon.toy.artcollector.game.dto.GameDetailDto;
 import com.dahoon.toy.artcollector.game.dto.GameDto;
+import com.dahoon.toy.artcollector.game.message.GameMessageProducer;
 import com.dahoon.toy.artcollector.game.repository.GameDetailRepository;
 import com.dahoon.toy.artcollector.game.repository.GameRepository;
 import lombok.RequiredArgsConstructor;
@@ -26,6 +27,7 @@ public class GameService {
     private final GameRepository gameRepository;
     private final GameDetailRepository gameDetailRepository;
     private final SteamApiClient steamApiClient;
+    private final GameMessageProducer gameMessageProducer;
 
     @Transactional
     public Page<GameDto> showGameList(int page, int count, String order) {
@@ -44,7 +46,12 @@ public class GameService {
     @Transactional
     public GameDetailDto getSteamGameDetail(String id, String appid) {
         GameDetail gameDetail = gameDetailRepository.findById(id)
-                .orElseGet(() -> steamApiClient.fetchGameDetail(Long.valueOf(appid)));
+                .orElseGet(() -> {
+                    GameDetail newGameDetail = steamApiClient.fetchGameDetail(Long.valueOf(appid));
+                    gameMessageProducer.sendGameDetailSave(newGameDetail);
+
+                    return newGameDetail;
+                });
 
         return GameDetailDto.toDto(gameDetail);
     }
