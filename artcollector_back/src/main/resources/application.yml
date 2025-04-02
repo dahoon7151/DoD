@@ -1,3 +1,7 @@
+logging:
+  level:
+    root: info
+
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -24,3 +28,14 @@ spring:
     redis:
       host: localhost
       port: 6379
+
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
+
+rabbitmq:
+  queue.name: sample.queue
+  exchange.name: sample.exchange
+  routing.key: sample.key
