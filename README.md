@@ -22,6 +22,7 @@ Steam API 및 크롤링을 통해 수집한 데이터를 기반으로 다양한 
 ### 📦 백엔드
 - Java 17, Spring Boot
 - Spring Security + JWT
+- JPA + QueryDSL
 - MySQL (유저, 리뷰, 커뮤니티)
 - MongoDB (게임 데이터)
 - Redis (캐시, 실시간 랭킹)
@@ -35,19 +36,6 @@ Steam API 및 크롤링을 통해 수집한 데이터를 기반으로 다양한 
 ### 🚀 인프라 & 배포
 - AWS EC2 + RDS + S3 + CloudFront
 - Nginx + Docker + GitHub Actions (CI/CD)
-
----
-
-## 🗂️ 프로젝트 구조
-
-```text
-client/       # Vue.js 클라이언트
-server/       # Spring Boot 백엔드
- └─ api/
- └─ domain/
- └─ config/
- └─ ...      
-```
 
 ---
 
@@ -85,21 +73,6 @@ server/       # Spring Boot 백엔드
 - `/api/reviews`: 리뷰 등록 / 조회 / 삭제
 - `/api/tiers`: 티어리스트 생성 / 조회 / 좋아요
 - `/api/users`: 회원 관련 API
-
----
-
-## 🛠️ 설치 및 실행 방법 (예정)
-
-```bash
-# 백엔드
-cd server
-./gradlew bootRun
-
-# 프론트엔드
-cd client
-npm install
-npm run dev
-```
 
 ---
 
