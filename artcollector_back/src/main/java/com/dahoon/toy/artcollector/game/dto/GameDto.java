@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Getter
 public class GameDto {
-    private String appId;
+    private Integer appId;
     private String name;
 //    private String url;
 //    private String img;

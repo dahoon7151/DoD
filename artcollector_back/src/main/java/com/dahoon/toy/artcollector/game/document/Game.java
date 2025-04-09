@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -13,11 +14,11 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class Game {  // 게임 목록 조회 성능 개선용 요약 문서
     @Id
     private String id;
-
-    private String appId;
+    @Field("appid")
+    private Integer appId;
     private String name;
 
-    public Game(String appId, String name) {
+    public Game(Integer appId, String name) {
         this.appId = appId;
         this.name = name;
     }

@@ -39,8 +39,8 @@ class GameControllerTest {
         String order = "abc";
 
         List<GameDto> gameList = List.of(
-                new GameDto("1L", "Game A"),
-                new GameDto("2L", "Game B")
+                new GameDto(1, "Game A"),
+                new GameDto(2, "Game B")
         );
         Page<GameDto> gamePage = new PageImpl<>(gameList, PageRequest.of(page, count), gameList.size());
 
@@ -49,6 +49,7 @@ class GameControllerTest {
         // when & then
         mockMvc.perform(get("/api/games/{page}/{count}/{order}", page, count, order))
                 .andExpect(status().isOk())
+                .andExpect(jsonPath("$.content[0].appId").value(1))
                 .andExpect(jsonPath("$.content[0].name").value("Game A"))
                 .andExpect(jsonPath("$.content[1].name").value("Game B"))
                 .andExpect(jsonPath("$.content.length()").value(2));

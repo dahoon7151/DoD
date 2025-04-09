@@ -23,9 +23,9 @@ class GameRepositoryTest {
 
     @BeforeEach
     void setUp() {
-        gameRepository.save(new Game("101", "Zelda"));
-        gameRepository.save(new Game("102", "Among Us"));
-        gameRepository.save(new Game("103", "Cyberpunk"));
+        gameRepository.save(new Game(101, "Zelda"));
+        gameRepository.save(new Game(102, "Among Us"));
+        gameRepository.save(new Game(103, "Cyberpunk"));
     }
 
     @AfterEach
@@ -47,6 +47,7 @@ class GameRepositoryTest {
         // then
         assertThat(result.getContent()).hasSize(2);
         assertThat(result.getTotalElements()).isEqualTo(3);
+        assertThat(result.getContent().get(0).getAppId()).isEqualTo(102);
         assertThat(result.getContent().get(0).getName()).isEqualTo("Among Us");
         assertThat(result.getContent().get(1).getName()).isEqualTo("Cyberpunk");
     }

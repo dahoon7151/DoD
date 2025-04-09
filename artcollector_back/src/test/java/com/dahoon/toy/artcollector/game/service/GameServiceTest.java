@@ -31,8 +31,8 @@ class GameServiceTest {
 
     @BeforeEach
     void setup() {
-        game1 = new Game("1", "titleA");
-        game2 = new Game("2", "titleB");
+        game1 = new Game(1, "titleA");
+        game2 = new Game(2, "titleB");
         gamePage = new PageImpl<>(List.of(game1, game2));
     }
 

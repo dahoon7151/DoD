@@ -42,6 +42,8 @@ public class GameController {
             @PathVariable(value = "count") int count,
             @Parameter(description = "정렬 기준", example = "abc")
             @PathVariable(value = "order") String order) {
+        log.info("컨트롤러 - 게임 목록 조회");
+
         Page<GameDto> gamePage = gameService.showGameList(page,count,order);
 
         return ResponseEntity.status(HttpStatus.OK).body(gamePage);
@@ -59,6 +61,8 @@ public class GameController {
                     regexp = "^(steam|epic|psn)+_[a-zA-Z0-9\\\\-]+$",
                     message = "ID 형식은 platform_appid 형식이어야 하며, appid에는 영문, 숫자, 하이픈만 포함할 수 있습니다."
             ) String id) {
+        log.info("컨트롤러 - 게임 상세정보 조회");
+
         String[] parts = id.split("_");
         GameDetailDto gameDetailDto;
         if (parts[0].equals("steam")) {

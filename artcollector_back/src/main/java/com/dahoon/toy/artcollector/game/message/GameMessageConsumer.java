@@ -14,7 +14,7 @@ public class GameMessageConsumer {
 
     @RabbitListener(queues = "${rabbitmq.queue.game.save}")
     public void handleGameDetailSave(GameDetailSaveMessage message) {
-        log.info("📥 Received game detail: {}", message.getId());
+        log.info("게임 상세정보 메시지큐 저장 완료: {}", message.getId());
         gameDetailRepository.save(message.toEntity());
     }
 }
