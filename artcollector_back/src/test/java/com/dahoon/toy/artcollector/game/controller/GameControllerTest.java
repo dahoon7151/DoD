@@ -1,9 +1,11 @@
 package com.dahoon.toy.artcollector.game.controller;
 
 import com.dahoon.toy.artcollector.common.config.SecurityConfig;
+import com.dahoon.toy.artcollector.game.dto.GameDetailDto;
 import com.dahoon.toy.artcollector.game.dto.GameDto;
 import com.dahoon.toy.artcollector.game.service.GameService;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -53,5 +55,21 @@ class GameControllerTest {
                 .andExpect(jsonPath("$.content[0].name").value("Game A"))
                 .andExpect(jsonPath("$.content[1].name").value("Game B"))
                 .andExpect(jsonPath("$.content.length()").value(2));
+    }
+
+    @Test
+    void showGameDetail_정상조회() throws Exception {
+        // given
+        String id = "steam_123456";
+        GameDetailDto mockDto = new GameDetailDto("steam_123456", "steam", true, null);
+
+        Mockito.when(gameService.getSteamGameDetail(id, "123456")).thenReturn(mockDto);
+
+        // when & then
+        mockMvc.perform(get("/api/games/" + id))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id").value(id));
+
+        Mockito.verify(gameService).getSteamGameDetail(id, "123456");
     }
 }

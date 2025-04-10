@@ -26,16 +26,14 @@ def save_to_mongodb(apps):
         db = client[DB_NAME]
         collection = db[COLLECTION_NAME]
 
-        # 이미 저장된 _id 확인
-        existing_ids = set(doc["_id"] for doc in collection.find({}, {"_id": 1}))
+        # 이미 저장된 appid 확인
+        existing_appids = set(doc["appid"] for doc in collection.find({}, {"appid": 1}))
 
         # 새로운 앱만 필터링
         new_apps = []
         for app in apps:
-            app_id_str = f"steam_{app['appid']}"
-            if app_id_str not in existing_ids:
+            if app['appid'] not in existing_appids:
                 new_apps.append({
-                    "_id": app_id_str,
                     "appid": app["appid"],
                     "title": app["name"]
                 })
