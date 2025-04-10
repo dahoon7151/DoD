@@ -72,4 +72,14 @@ class GameControllerTest {
 
         Mockito.verify(gameService).getSteamGameDetail(id, "123456");
     }
+
+    @Test
+    void showGameDetail_Valid에러() throws Exception {
+        // given
+        String id = "steam123";
+
+        // when & then
+        mockMvc.perform(get("/api/games/" + id))
+                .andExpect(status().isBadRequest());
+    }
 }
