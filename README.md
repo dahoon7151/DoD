@@ -6,78 +6,112 @@
 Steam API 및 크롤링을 통해 수집한 데이터를 기반으로 다양한 기능을 제공합니다.
 이후 게임 이외의 분야도 추가할 예정입니다.
 
----
+📅 **2024.08 ~ 현재 진행 중**
 
-## 🧠 주요 목표
+👤 **개인 프로젝트**
 
-- 개발 역량 향상을 위한 실전형 토이 프로젝트
-- 실용적인 아키텍처 설계와 새로운 기술 도입 (e.g. 메시지 큐)
-- 개인화된 게임 수집 기능 (티어리스트, Topster 등)
-- 유저 기반 리뷰, 커뮤니티 기능 제공
+🔗 [GitHub Repository](https://github.com/dahoon7151/DoD)
 
----
+### 🔧 프로젝트에서 맡은 작업
 
-## ⚙️ 기술 스택
-
-### 📦 백엔드
-- Java 17, Spring Boot
-- Spring Security + JWT
-- JPA + QueryDSL
-- MySQL (유저, 리뷰, 커뮤니티)
-- MongoDB (게임 데이터)
-- Redis (캐시, 실시간 랭킹)
-- RabbitMQ (비동기 처리 예정)
-
-### 🌐 프론트엔드
-- Vue.js 3 (Composition API)
-- Axios
-- Vue Router, Pinia
-
-### 🚀 인프라 & 배포
-- AWS EC2 + RDS + S3 + CloudFront
-- Nginx + Docker + GitHub Actions (CI/CD)
+- **콘텐츠 크롤링 자동화 및 API 연동**
+    - Steam Web API와 Python 크롤러를 통해 메타데이터 수집
+    - Docker-Compose 기반 자동화 및 파이프라인 구성
+- **게임/콘텐츠 상세 정보 API 구현**
+    - 외부 API 연동 + 메시지 큐(RabbitMQ) 활용한 비동기 저장 처리
+- **커뮤니티 API 개발**
+    - 게시판 CRUD 및 조건 기반 검색(QueryDSL) 구현
+- **데이터 저장 구조 설계 및 복합 환경 구성**
+    - MongoDB + MySQL 혼합 구조 설계
+- **Elasticsearch 기반 검색 기능 개발 중**
+    - 정교한 필터링과 자동완성 기능 포함 예정
 
 ---
 
-## 📌 주요 기능
+### 🛠 사용한 기술 스택
 
-### 🎮 게임
-- Steam 기반 게임 정보 조회
-- 검색, 정렬, 필터 기능 지원
-- 인기 게임 추천
+### **Backend**
 
-### 📝 유저 리뷰
-- 게임에 대한 별점 및 리뷰 작성
-- 리뷰 좋아요 및 신고 기능
-- 평론가 레벨 시스템 도입 예정
+Java, Spring Boot, JPA (QueryDSL), RabbitMQ, Python, Elasticsearch
 
-### 🧩 티어리스트
-- 유저별 티어리스트 생성 및 공유
-- 게임별 배치 및 코멘트 추가
-- 공개 여부 설정 + 좋아요 기능
+### **Frontend**
 
-### 🖼️ Topster (후순위)
-- 이미지 기반 게임 수집
-- 공유 가능한 개인 Topster 캔버스
+Vue.js
 
-### 👤 유저
-- 회원가입 / 로그인 / 로그아웃
-- JWT 기반 인증 (Access + Refresh Token)
-- 회원 탈퇴
+### **Database**
+
+MongoDB, MySQL, Redis
+
+### **DevOps / Infra**
+
+Docker, AWS, GitHub Actions
+
+### **Tools**
+
+Postman, Docker-Compose, JMeter, Swagger
 
 ---
 
-## 🔄 API 설계 (Swagger 제공 예정)
+## 📌 초기 기획 및 설계
 
-- `/api/games`: 게임 목록 / 상세
-- `/api/reviews`: 리뷰 등록 / 조회 / 삭제
-- `/api/tiers`: 티어리스트 생성 / 조회 / 좋아요
-- `/api/users`: 회원 관련 API
+- **API 설계 및 데이터베이스 모델링** → ERD(Entity-Relationship Diagram) 작성
+- SW 아키텍처 다이어그램
 
 ---
 
-## ✨ 목표
+## 🔧 개발 단계
 
-- 실전 기반 API 설계 및 DB 설계
-- 메시지 큐(RabbitMQ) 기반 비동기 처리 실험
-- 확장 가능한 서비스 구조 학습
+### 🏗 백엔드 기능 구현
+
+### 📌 콘텐츠 데이터 크롤링 및 저장
+
+- **Steam Web API** 호출 + 크롤링 자동화
+- **Python 크롤러 컨테이너화** (Docker-Compose)
+- MongoDB Unique Index 적용 → appId 중복 방지
+
+### 📌 상세 조회 및 비동기 저장
+
+- 사용자 요청 시 **즉시 응답 → RabbitMQ로 저장 요청 비동기 처리**
+- Spring AMQP + RabbitMQ를 통한 이벤트 처리 구조 구현
+- 외부 API 호출과 저장을 분리해 응답 속도 개선
+
+### 📌 커뮤니티 API
+
+- **게시판 CRUD**: 게시글/댓글 작성, 조회, 수정, 삭제
+- **QueryDSL을 통한 조건별 검색 구현**:
+    - 작성자, 키워드, 날짜 등 기준으로 필터링 가능
+
+### 📌 검색 기능 (진행 중)
+
+- Elasticsearch 기반 검색 서버 구성 중
+- 향후 리뷰, 태그, 가격, 장르 기반 정렬 및 추천 시스템 확장 예정
+
+---
+
+## ☁️ CI/CD 및 배포 환경
+
+- **Docker 환경 구성**
+    - 백엔드, MongoDB, MySQL, Redis, 크롤러 컨테이너 관리
+- **Docker-Compose를 통한 로컬 개발 환경 통합**
+- **GitHub Actions 기반 CI 구성**
+    - 코드 변경 시 자동 빌드/테스트, 린팅 적용
+- **AWS 기반 배포 예정**
+
+---
+
+### 🛠 이슈 및 트러블슈팅
+
+### **MongoDB 사용 결정**
+
+- **문제:** RDBMS만 사용해왔으나, 크롤링 데이터 구조가 다양하여 스키마 통합이 어려웠음.
+- **해결:** 조회가 많고 업데이트가 적은 데이터 특성을 고려해 **NoSQL(MongoDB) 도입**, 대량 데이터 저장과 분산 처리가 용이함.
+
+### **MongoDB 엔티티 빌더 패턴 사용 문제**
+
+- **문제:** 크롤링 데이터의 필드 수가 많고 일부 필드는 Null 값이 많아, 빌더 패턴 사용 시 필수 인자 누락 위험 존재.
+- **해결:** **정적 팩토리 메소드**를 활용하여 객체 생성 로직을 개선, 필수 필드 누락 방지.
+
+### 게임 상세정보 조회 : 즉시응답 + 비동기 저장 (RabbitMQ 메시지 큐)
+
+- **문제:** 외부 API에서 데이터를 받은 후 DB에 저장하고 응답하는 구조라, 전체 응답 시간이 길어짐
+- **해결:** RabbitMQ를 통해 저장 작업을 비동기 처리하고, API 응답은 즉시 반환하도록 구조 개선
