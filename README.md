@@ -30,25 +30,11 @@ Steam API 및 크롤링을 통해 수집한 데이터를 기반으로 다양한 
 
 ### 🛠 사용한 기술 스택
 
-### **Backend**
-
-Java, Spring Boot, JPA (QueryDSL), RabbitMQ, Python, Elasticsearch
-
-### **Frontend**
-
-Vue.js
-
-### **Database**
-
-MongoDB, MySQL, Redis
-
-### **DevOps / Infra**
-
-Docker, AWS, GitHub Actions
-
-### **Tools**
-
-Postman, Docker-Compose, JMeter, Swagger
+- `Java`, `Spring Boot`, `JPA`, `QueryDSL`, `RabbitMQ`, `Python`, `Elasticsearch`
+- `Vue.js`
+- `MongoDB`, `MySQL`, `Redis`
+- `Docker`, `AWS`, `Git/GitHub`, `GitHub Actions`
+- `Swagger`
 
 ---
 
