@@ -19,6 +19,7 @@ spring:
       hibernate:
         format_sql: true
         default_batch_fetch_size: 100
+
   data:
     mongodb:
       host: localhost
@@ -34,6 +35,9 @@ spring:
     port: 5672
     username: guest
     password: guest
+
+  elasticsearch:
+    uris: http://localhost:9200
 
 rabbitmq:
   exchange:
