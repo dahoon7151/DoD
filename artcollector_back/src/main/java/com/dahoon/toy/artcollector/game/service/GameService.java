@@ -1,5 +1,7 @@
 package com.dahoon.toy.artcollector.game.service;
 
+import co.elastic.clients.elasticsearch.ElasticsearchClient;
+import co.elastic.clients.elasticsearch.core.SearchResponse;
 import com.dahoon.toy.artcollector.game.component.SteamApiClient;
 import com.dahoon.toy.artcollector.game.document.Game;
 import com.dahoon.toy.artcollector.game.document.GameDetail;
@@ -10,13 +12,11 @@ import com.dahoon.toy.artcollector.game.repository.GameDetailRepository;
 import com.dahoon.toy.artcollector.game.repository.GameRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,9 +28,10 @@ public class GameService {
     private final GameDetailRepository gameDetailRepository;
     private final SteamApiClient steamApiClient;
     private final GameMessageProducer gameMessageProducer;
+    private final ElasticsearchClient elasticsearchClient;
 
     @Transactional
-    public Page<GameDto> showGameList(int page, int count, String order) {
+    public Page<GameDto> showGameList(int page, int count, String order, String keyword) {
         List<Sort.Order> sorts = new ArrayList<>();
         if (order.equals("abc")) {
             sorts.add(Sort.Order.asc("name"));
@@ -38,9 +39,40 @@ public class GameService {
             throw new IllegalArgumentException("잘못된 정렬 기준");
         }
         Pageable pageable = PageRequest.of(page, count, Sort.by(sorts));
-        Page<Game> gamePages = gameRepository.findAll(pageable);
 
-        return gamePages.map(GameDto::toDto);
+        if (keyword == null || keyword.trim().isEmpty()) {
+            return gameRepository.findAll(pageable).map(GameDto::toDto);
+        }
+
+        try {
+            SearchResponse<Game> response = elasticsearchClient.search(s -> s
+                            .index("game")
+                            .query(q -> q
+                                    .match(m -> m
+                                            .field("name")
+                                            .query(keyword)
+                                    )
+                            )
+                            .from(page * count)
+                            .size(count),
+                    Game.class
+            );
+
+            List<GameDto> dtos = response.hits().hits().stream()
+                    .map(Hit::source)
+                    .filter(Objects::nonNull)
+                    .map(GameDto::toDto)
+                    .collect(Collectors.toList());
+
+            long totalHits = response.hits().total() != null
+                    ? response.hits().total().value()
+                    : dtos.size(); // fallback
+
+            return new PageImpl<>(dtos, pageable, totalHits);
+
+        } catch (IOException e) {
+            throw new RuntimeException("Elasticsearch 검색 실패", e);
+        }
     }
 
     @Transactional

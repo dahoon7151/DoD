@@ -41,10 +41,12 @@ public class GameController {
             @Parameter(description = "데이터 수")
             @PathVariable(value = "count") int count,
             @Parameter(description = "정렬 기준", example = "abc")
-            @PathVariable(value = "order") String order) {
+            @PathVariable(value = "order") String order,
+            @Parameter(description = "검색어", in = ParameterIn.QUERY)
+            @RequestParam(required = false) String keyword) {
         log.info("컨트롤러 - 게임 목록 조회");
 
-        Page<GameDto> gamePage = gameService.showGameList(page,count,order);
+        Page<GameDto> gamePage = gameService.showGameList(page,count,order,keyword);
 
         return ResponseEntity.status(HttpStatus.OK).body(gamePage);
     }
