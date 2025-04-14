@@ -45,7 +45,7 @@ class GameControllerTest {
         );
         Page<GameDto> gamePage = new PageImpl<>(gameList, PageRequest.of(page, count), gameList.size());
 
-        given(gameService.showGameList(page, count, order)).willReturn(gamePage);
+        given(gameService.showGameList(page, count, order, keyword)).willReturn(gamePage);
 
         // when & then
         mockMvc.perform(get("/api/games/{page}/{count}/{order}", page, count, order))

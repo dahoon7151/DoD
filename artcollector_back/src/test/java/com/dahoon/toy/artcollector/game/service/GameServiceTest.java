@@ -65,7 +65,7 @@ class GameServiceTest {
         when(gameRepository.findAll(expectedPageable)).thenReturn(gamePage);
 
         // when
-        Page<GameDto> result = gameService.showGameList(page, count, order);
+        Page<GameDto> result = gameService.showGameList(page, count, order, keyword);
 
         // then
         assertThat(result).hasSize(2);

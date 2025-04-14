@@ -1,7 +1,10 @@
 package com.dahoon.toy.artcollector.game.service;
 
 import co.elastic.clients.elasticsearch.ElasticsearchClient;
+import co.elastic.clients.elasticsearch._types.SortOrder;
+import co.elastic.clients.elasticsearch.core.SearchRequest;
 import co.elastic.clients.elasticsearch.core.SearchResponse;
+import co.elastic.clients.elasticsearch.core.search.Hit;
 import com.dahoon.toy.artcollector.game.component.SteamApiClient;
 import com.dahoon.toy.artcollector.game.document.Game;
 import com.dahoon.toy.artcollector.game.document.GameDetail;
@@ -19,6 +22,8 @@ import org.springframework.transaction.annotation.Transactional;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -40,33 +45,39 @@ public class GameService {
         }
         Pageable pageable = PageRequest.of(page, count, Sort.by(sorts));
 
-        if (keyword == null || keyword.trim().isEmpty()) {
-            return gameRepository.findAll(pageable).map(GameDto::toDto);
-        }
+        String effectiveKeyword = (keyword == null || keyword.trim().isEmpty()) ? null : keyword.trim();
 
         try {
-            SearchResponse<Game> response = elasticsearchClient.search(s -> s
-                            .index("game")
-                            .query(q -> q
-                                    .match(m -> m
-                                            .field("name")
-                                            .query(keyword)
-                                    )
-                            )
-                            .from(page * count)
-                            .size(count),
-                    Game.class
-            );
+            SearchResponse<Game> response = elasticsearchClient.search(s -> {
+                SearchRequest.Builder builder = s.index("game")
+                        .from(page * count)
+                        .size(count)
+                        .sort(sort -> sort
+                                .field(f -> f
+                                        .field("name.keyword")
+                                        .order(SortOrder.Asc)
+                                )
+                        );
+
+                // keyword 유무에 따라 단순 조회 or 검색
+                if (effectiveKeyword == null) {
+                    builder.query(q -> q.matchAll(m -> m));
+                } else {
+                    builder.query(q -> q.match(m -> m.field("name").query(effectiveKeyword)));
+                }
+
+                return builder;
+            }, Game.class);
 
             List<GameDto> dtos = response.hits().hits().stream()
                     .map(Hit::source)
                     .filter(Objects::nonNull)
                     .map(GameDto::toDto)
-                    .collect(Collectors.toList());
+                    .toList();
 
             long totalHits = response.hits().total() != null
                     ? response.hits().total().value()
-                    : dtos.size(); // fallback
+                    : dtos.size();
 
             return new PageImpl<>(dtos, pageable, totalHits);
 
