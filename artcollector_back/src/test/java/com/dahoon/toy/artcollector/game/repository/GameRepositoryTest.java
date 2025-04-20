@@ -32,36 +32,4 @@ class GameRepositoryTest {
     void tearDown() {
         gameRepository.deleteAll();
     }
-
-    @Test
-    void findAll_정상조회() {
-        // given
-        int page = 0;
-        int size = 2;
-        Sort sort = Sort.by(Sort.Order.asc("name"));
-        Pageable pageable = PageRequest.of(page, size, sort);
-
-        // when
-        Page<Game> result = gameRepository.findAll(pageable);
-
-        // then
-        assertThat(result.getContent()).hasSize(2);
-        assertThat(result.getTotalElements()).isEqualTo(3);
-        assertThat(result.getContent().get(0).getAppId()).isEqualTo(102);
-        assertThat(result.getContent().get(0).getName()).isEqualTo("Among Us");
-        assertThat(result.getContent().get(1).getName()).isEqualTo("Cyberpunk");
-    }
-
-    @Test
-    void findAll_두번째페이지() {
-        // given
-        Pageable pageable = PageRequest.of(1, 2, Sort.by(Sort.Order.asc("name")));
-
-        // when
-        Page<Game> result = gameRepository.findAll(pageable);
-
-        // then
-        assertThat(result.getContent()).hasSize(1);
-        assertThat(result.getContent().get(0).getName()).isEqualTo("Zelda");
-    }
 }

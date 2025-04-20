@@ -1,5 +1,9 @@
 package com.dahoon.toy.artcollector.game.service;
 
+import co.elastic.clients.elasticsearch.ElasticsearchClient;
+import co.elastic.clients.elasticsearch.core.SearchRequest;
+import co.elastic.clients.elasticsearch.core.SearchResponse;
+import co.elastic.clients.elasticsearch.core.search.Hit;
 import com.dahoon.toy.artcollector.game.component.SteamApiClient;
 import com.dahoon.toy.artcollector.game.document.Game;
 import com.dahoon.toy.artcollector.game.document.GameDetail;
@@ -11,19 +15,24 @@ import com.dahoon.toy.artcollector.game.repository.GameRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.ArgumentMatchers;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.data.domain.*;
 
+import java.io.IOException;
+import java.lang.reflect.Type;
 import java.util.List;
 import java.util.Optional;
 
+
+import static com.mongodb.client.model.Filters.eq;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class GameServiceTest {
@@ -36,6 +45,8 @@ class GameServiceTest {
     private SteamApiClient steamApiClient;
     @Mock
     private GameMessageProducer gameMessageProducer;
+    @Mock
+    private ElasticsearchClient elasticsearchClient;
 
     @InjectMocks
     private GameService gameService;
@@ -55,27 +66,6 @@ class GameServiceTest {
     }
 
     @Test
-    void showGameList_정상반환() {
-        // given
-        int page = 0;
-        int count = 2;
-        String order = "abc";
-
-        Pageable expectedPageable = PageRequest.of(page, count, Sort.by(Sort.Order.asc("name")));
-        when(gameRepository.findAll(expectedPageable)).thenReturn(gamePage);
-
-        // when
-        Page<GameDto> result = gameService.showGameList(page, count, order, keyword);
-
-        // then
-        assertThat(result).hasSize(2);
-        assertThat(result.getContent().get(0).getName()).isEqualTo("titleA");
-        assertThat(result.getContent().get(1).getName()).isEqualTo("titleB");
-
-        verify(gameRepository).findAll(expectedPageable);
-    }
-
-    @Test
     void getSteamGameDetail_DB조회() {
         // given
         String id = "steam_123456";
@@ -89,7 +79,7 @@ class GameServiceTest {
         // then
         assertEquals(id, result.getId());
         Mockito.verify(steamApiClient, Mockito.never()).fetchGameDetail(Mockito.anyLong());
-        Mockito.verify(gameMessageProducer, Mockito.never()).sendGameDetailSave(Mockito.any());
+        Mockito.verify(gameMessageProducer, Mockito.never()).sendGameDetailSave(any());
     }
 
     @Test

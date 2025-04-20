@@ -20,7 +20,7 @@ public class GameDto {
 
     public static GameDto toDto(Game game) {
         return new GameDto(
-                game.getAppId(),
+                game.getAppid(),
                 game.getName());
     }
 }

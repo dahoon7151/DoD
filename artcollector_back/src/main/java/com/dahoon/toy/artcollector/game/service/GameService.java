@@ -37,13 +37,7 @@ public class GameService {
 
     @Transactional
     public Page<GameDto> showGameList(int page, int count, String order, String keyword) {
-        List<Sort.Order> sorts = new ArrayList<>();
-        if (order.equals("abc")) {
-            sorts.add(Sort.Order.asc("name"));
-        } else {
-            throw new IllegalArgumentException("잘못된 정렬 기준");
-        }
-        Pageable pageable = PageRequest.of(page, count, Sort.by(sorts));
+        Pageable pageable = PageRequest.of(page, count);
 
         String effectiveKeyword = (keyword == null || keyword.trim().isEmpty()) ? null : keyword.trim();
 
@@ -54,10 +48,11 @@ public class GameService {
                         .size(count)
                         .sort(sort -> sort
                                 .field(f -> f
-                                        .field("name.keyword")
-                                        .order(SortOrder.Asc)
+                                        .field(resolveSortOrder(order))
+                                        .order(SortOrder.Asc)  // 정렬방향 가변적으로 추후에 수정
                                 )
                         );
+                log.info("searchRequest 생성");
 
                 // keyword 유무에 따라 단순 조회 or 검색
                 if (effectiveKeyword == null) {
@@ -65,11 +60,11 @@ public class GameService {
                 } else {
                     builder.query(q -> q.match(m -> m.field("name").query(effectiveKeyword)));
                 }
-
                 return builder;
             }, Game.class);
+            log.info("search 완료");
 
-            List<GameDto> dtos = response.hits().hits().stream()
+            List<GameDto> dtoList = response.hits().hits().stream()
                     .map(Hit::source)
                     .filter(Objects::nonNull)
                     .map(GameDto::toDto)
@@ -77,9 +72,9 @@ public class GameService {
 
             long totalHits = response.hits().total() != null
                     ? response.hits().total().value()
-                    : dtos.size();
+                    : dtoList.size();
 
-            return new PageImpl<>(dtos, pageable, totalHits);
+            return new PageImpl<>(dtoList, pageable, totalHits);
 
         } catch (IOException e) {
             throw new RuntimeException("Elasticsearch 검색 실패", e);
@@ -99,16 +94,13 @@ public class GameService {
         return GameDetailDto.toDto(gameDetail);
     }
 
-//    @Transactional
-//    public List<GameDto> searchGame(String title) {
-//        List<Game> gameList = gameRepository.findByTitleContaining(title).orElseThrow(() -> new IllegalArgumentException("해당 제목의 게임을 검색할 수 없습니다."));
-//        log.info("해당 검색어 포함 게임 조회");
-//        List<GameDto> gameDtoList = new ArrayList<>();
-//        for (Game game : gameList) {
-//            GameDto gameDto = new GameDto(game); // 필요한 정보만 반환하도록 수정 필요 (제목,이미지)
-//            gameDtoList.add(gameDto);
-//        }
-//
-//        return gameDtoList;
-//    }
+
+    private String resolveSortOrder(String order) {
+        switch (order) {
+            case "abc": // 이름 순
+                return "name.keyword";
+            default:
+                throw new IllegalArgumentException("잘못된 정렬 기준입니다: " + order);
+        }
+    }
 }
