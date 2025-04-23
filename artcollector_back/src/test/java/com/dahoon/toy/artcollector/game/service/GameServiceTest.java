@@ -1,29 +1,21 @@
 package com.dahoon.toy.artcollector.game.service;
 
 import co.elastic.clients.elasticsearch.ElasticsearchClient;
-import co.elastic.clients.elasticsearch.core.SearchRequest;
-import co.elastic.clients.elasticsearch.core.SearchResponse;
-import co.elastic.clients.elasticsearch.core.search.Hit;
 import com.dahoon.toy.artcollector.game.component.SteamApiClient;
 import com.dahoon.toy.artcollector.game.document.Game;
 import com.dahoon.toy.artcollector.game.document.GameDetail;
 import com.dahoon.toy.artcollector.game.dto.GameDetailDto;
-import com.dahoon.toy.artcollector.game.dto.GameDto;
 import com.dahoon.toy.artcollector.game.message.GameMessageProducer;
 import com.dahoon.toy.artcollector.game.repository.GameDetailRepository;
-import com.dahoon.toy.artcollector.game.repository.GameRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.ArgumentMatchers;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.data.domain.*;
 
-import java.io.IOException;
-import java.lang.reflect.Type;
 import java.util.List;
 import java.util.Optional;
 
@@ -32,13 +24,10 @@ import static com.mongodb.client.model.Filters.eq;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class GameServiceTest {
 
-    @Mock
-    private GameRepository gameRepository;
     @Mock
     private GameDetailRepository gameDetailRepository;
     @Mock

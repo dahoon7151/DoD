@@ -12,7 +12,6 @@ import com.dahoon.toy.artcollector.game.dto.GameDetailDto;
 import com.dahoon.toy.artcollector.game.dto.GameDto;
 import com.dahoon.toy.artcollector.game.message.GameMessageProducer;
 import com.dahoon.toy.artcollector.game.repository.GameDetailRepository;
-import com.dahoon.toy.artcollector.game.repository.GameRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.*;
@@ -20,16 +19,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
 @Slf4j
 public class GameService {
-    private final GameRepository gameRepository;
     private final GameDetailRepository gameDetailRepository;
     private final SteamApiClient steamApiClient;
     private final GameMessageProducer gameMessageProducer;

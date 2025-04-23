@@ -25,3 +25,7 @@ def generate_documents():
 
 # 색인 실행
 bulk(es, generate_documents())
+
+# 추후에 파이프라인 구축할 때
+# ES에 새 document 생성 X
+# 새로 추가되는 데이터만 추가하도록 구현
