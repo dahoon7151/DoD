@@ -41,20 +41,22 @@ public class GameService {
             SearchResponse<Game> response = elasticsearchClient.search(s -> {
                 SearchRequest.Builder builder = s.index("game")
                         .from(page * count)
-                        .size(count)
-                        .sort(sort -> sort
-                                .field(f -> f
-                                        .field(resolveSortOrder(order))
-                                        .order(SortOrder.Asc)  // 정렬방향 가변적으로 추후에 수정
-                                )
-                        );
+                        .size(count);
+
                 log.info("searchRequest 생성");
 
                 // keyword 유무에 따라 단순 조회 or 검색
                 if (effectiveKeyword == null) {
-                    builder.query(q -> q.matchAll(m -> m));
+                    builder.query(q -> q.matchAll(m -> m))
+                            .sort(sort -> sort
+                                    .field(f -> f
+                                            .field(resolveSortOrder(order))
+                                            .order(SortOrder.Asc)  // 정렬방향 가변적으로 추후에 수정
+                                    )
+                            );
                 } else {
-                    builder.query(q -> q.match(m -> m.field("name").query(effectiveKeyword)));
+                    builder.query(q -> q.match(m -> m.field("name").query(effectiveKeyword)))
+                            .sort(sort -> sort.score(ss -> ss.order(SortOrder.Desc)));
                 }
                 return builder;
             }, Game.class);
