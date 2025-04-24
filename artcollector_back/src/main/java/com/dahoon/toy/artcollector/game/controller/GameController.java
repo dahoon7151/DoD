@@ -75,19 +75,4 @@ public class GameController {
 
         return ResponseEntity.status(HttpStatus.OK).body(gameDetailDto);
     }
-
-//
-//    @GetMapping("/rank/review")
-//    @Operation(summary = "인기 리뷰 조회", description = "인기있는 상위 5개 리뷰의 정보 반환")
-//    public ResponseEntity<?> rankReview() {
-//
-//        return ResponseEntity.status(HttpStatus.OK).body(null);
-//    }
-//
-//    @PostMapping("/review/{gameId}")
-//    @Operation(summary = "리뷰 작성", description = "게임에 대한 리뷰글 작성")
-//    public ResponseEntity<?> writeReview() {
-//
-//        return ResponseEntity.status(HttpStatus.OK).body(null);
-//    }
 }

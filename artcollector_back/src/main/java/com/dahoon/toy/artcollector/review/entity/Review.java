@@ -1,4 +1,4 @@
-package com.dahoon.toy.artcollector.post.entity;
+package com.dahoon.toy.artcollector.review.entity;
 
 import com.dahoon.toy.artcollector.member.entity.Member;
 import jakarta.persistence.*;
@@ -11,16 +11,21 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
-public class Post {
+public class Review {
     @Id
-    @GeneratedValue( strategy = GenerationType.IDENTITY)
-    @Column(name = "post_id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "review_id")
     private Long id;
 
-    @Column(nullable = false)
     private String title;
+    private String content;
 
-    @ManyToOne
-    @JoinColumn(name = "member_id")
-    private Member member;
+    @Column(nullable = false)
+    private Integer rating;
+
+    // GameDetail 참조
+
+    // Member 참조
+
+    // ReviewLike 참조
 }
