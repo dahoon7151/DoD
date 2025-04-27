@@ -1,6 +1,7 @@
-package com.dahoon.toy.artcollector.game.controller;
+package com.dahoon.toy.artcollector.game;
 
 import com.dahoon.toy.artcollector.common.config.SecurityConfig;
+import com.dahoon.toy.artcollector.game.controller.GameController;
 import com.dahoon.toy.artcollector.game.dto.GameDetailDto;
 import com.dahoon.toy.artcollector.game.dto.GameDto;
 import com.dahoon.toy.artcollector.game.service.GameService;

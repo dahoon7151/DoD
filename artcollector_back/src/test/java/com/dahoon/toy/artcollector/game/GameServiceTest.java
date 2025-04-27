@@ -1,4 +1,4 @@
-package com.dahoon.toy.artcollector.game.service;
+package com.dahoon.toy.artcollector.game;
 
 import co.elastic.clients.elasticsearch.ElasticsearchClient;
 import com.dahoon.toy.artcollector.game.component.SteamApiClient;
@@ -7,6 +7,7 @@ import com.dahoon.toy.artcollector.game.document.GameDetail;
 import com.dahoon.toy.artcollector.game.dto.GameDetailDto;
 import com.dahoon.toy.artcollector.game.message.GameMessageProducer;
 import com.dahoon.toy.artcollector.game.repository.GameDetailRepository;
+import com.dahoon.toy.artcollector.game.service.GameService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
