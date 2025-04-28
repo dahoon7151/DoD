@@ -1,4 +1,4 @@
-package com.dahoon.toy.artcollector.member.entity;
+package com.dahoon.toy.artcollector.user.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
@@ -8,10 +8,10 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
-public class Member {
+public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "member_id")
+    @Column(name = "user_id")
     private Long id;
 
     @Column(nullable = false)

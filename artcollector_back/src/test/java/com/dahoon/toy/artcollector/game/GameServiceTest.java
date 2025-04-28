@@ -20,9 +20,6 @@ import org.springframework.data.domain.*;
 import java.util.List;
 import java.util.Optional;
 
-
-import static com.mongodb.client.model.Filters.eq;
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 
@@ -41,17 +38,10 @@ class GameServiceTest {
     @InjectMocks
     private GameService gameService;
 
-    private Game game1;
-    private Game game2;
-    private Page<Game> gamePage;
     private GameDetail gameDetail;
 
     @BeforeEach
     void setup() {
-        game1 = new Game(1, "titleA");
-        game2 = new Game(2, "titleB");
-        gamePage = new PageImpl<>(List.of(game1, game2));
-
         gameDetail = new GameDetail("steam_123456", "steam", true, null);
     }
 

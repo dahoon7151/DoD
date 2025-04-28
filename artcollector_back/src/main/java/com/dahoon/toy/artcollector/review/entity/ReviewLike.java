@@ -15,4 +15,8 @@ public class ReviewLike {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "review_like_id")
     private Long id;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "review_id", nullable = false)
+    private Review review;
 }

@@ -1,6 +1,6 @@
 package com.dahoon.toy.artcollector.post;
 
-import com.dahoon.toy.artcollector.member.entity.Member;
+import com.dahoon.toy.artcollector.user.entity.User;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -27,5 +27,5 @@ public class Post {
 
     @ManyToOne
     @JoinColumn(name = "member_id")
-    private Member member;
+    private User member;
 }

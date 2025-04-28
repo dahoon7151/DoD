@@ -1,31 +1,39 @@
 package com.dahoon.toy.artcollector.review.entity;
 
-import com.dahoon.toy.artcollector.member.entity.Member;
+import com.dahoon.toy.artcollector.user.entity.User;
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
+@Builder
 public class Review {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "review_id")
     private Long id;
 
-    private String title;
+    @Column(nullable = false)
     private String content;
-
     @Column(nullable = false)
     private Integer rating;
+    @Column(nullable = false)
+    private String gameId;
 
-    // GameDetail 참조
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
 
-    // Member 참조
+    @OneToMany(mappedBy = "review", cascade = CascadeType.ALL, orphanRemoval = true)
+    @Builder.Default
+    private List<ReviewLike> likes = new ArrayList<>();
 
-    // ReviewLike 참조
+    @Column(nullable = false)
+    private Integer likeCount;
 }
