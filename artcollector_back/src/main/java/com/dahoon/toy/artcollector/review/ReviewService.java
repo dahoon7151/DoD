@@ -4,6 +4,7 @@ import com.dahoon.toy.artcollector.review.entity.Review;
 import com.dahoon.toy.artcollector.user.entity.User;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,5 +20,10 @@ public class ReviewService {
         log.info("리뷰 저장 완료");
 
         return ReviewDto.toDto(review);
+    }
+
+    @Transactional(readOnly = true)
+    public Page<ReviewDto> getReviewsByGame(int page, int count, String order, String gameId) {
+
     }
 }

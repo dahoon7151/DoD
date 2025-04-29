@@ -31,7 +31,6 @@ public class GameService {
     private final GameMessageProducer gameMessageProducer;
     private final ElasticsearchClient elasticsearchClient;
 
-    @Transactional
     public Page<GameDto> showGameList(int page, int count, String order, String keyword) {
         Pageable pageable = PageRequest.of(page, count);
 
@@ -79,7 +78,6 @@ public class GameService {
         }
     }
 
-    @Transactional
     public GameDetailDto getSteamGameDetail(String id, String appid) {
         GameDetail gameDetail = gameDetailRepository.findById(id)
                 .orElseGet(() -> {
