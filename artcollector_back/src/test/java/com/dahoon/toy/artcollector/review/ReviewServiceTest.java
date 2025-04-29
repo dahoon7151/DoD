@@ -9,10 +9,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.*;
 
 import java.util.List;
 
@@ -67,11 +64,11 @@ public class ReviewServiceTest {
         int page = 0;
         int count = 5;
         String order = "rating";
-        PageRequest pageable = PageRequest.of(page, count, Sort.by(Sort.Order.desc("rating")));
+        Pageable pageable = PageRequest.of(page, count, Sort.by(Sort.Order.desc("rating")));
         Page<Review> reviewPage = new PageImpl<>(reviewList, pageable, 10);
 
         //when
-        Page<ReviewDto> reviewDtos = reviewService.getReviewsByGame(page, count, order, gameId);
+        Page<ReviewDto> reviewDtos = reviewService.getReviewsByGame(page, count, order, gameId, null);
 
         //then
 
