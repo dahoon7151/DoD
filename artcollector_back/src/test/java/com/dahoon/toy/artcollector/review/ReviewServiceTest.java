@@ -1,7 +1,7 @@
 package com.dahoon.toy.artcollector.review;
 
-import com.dahoon.toy.artcollector.game.document.GameDetail;
 import com.dahoon.toy.artcollector.review.entity.Review;
+import com.dahoon.toy.artcollector.review.repository.ReviewRepository;
 import com.dahoon.toy.artcollector.user.entity.User;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
