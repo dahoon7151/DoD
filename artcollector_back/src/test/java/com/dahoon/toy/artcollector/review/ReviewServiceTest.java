@@ -36,8 +36,8 @@ public class ReviewServiceTest {
         user2 = User.builder().email("dahoon2@mail.com").password("다훈다훈").build();
 
         reviewList = List.of(
-                Review.builder().content("꿀잼").rating(8).gameId("steam_1").user(user1).likeCount(0).build(),
-                Review.builder().content("갓겜").rating(9).gameId("steam_1").user(user2).likeCount(0).build()
+                Review.builder().content("갓겜").rating(9).gameId("steam_1").user(user2).likeCount(0).build(),
+                Review.builder().content("꿀잼").rating(8).gameId("steam_1").user(user1).likeCount(0).build()
         );
     }
 
@@ -66,11 +66,13 @@ public class ReviewServiceTest {
         String order = "rating";
         Pageable pageable = PageRequest.of(page, count, Sort.by(Sort.Order.desc("rating")));
         Page<Review> reviewPage = new PageImpl<>(reviewList, pageable, 10);
+        given(reviewRepository.findAllByGameId(gameId, pageable)).willReturn(reviewPage);
 
         //when
         Page<ReviewDto> reviewDtos = reviewService.getReviewsByGame(page, count, order, gameId, null);
 
         //then
-
+        assertEquals("꿀잼", reviewDtos.getContent().get(1).getContent());
+        assertEquals("갓겜", reviewDtos.getContent().get(0).getContent());
     }
 }

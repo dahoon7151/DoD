@@ -14,7 +14,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.transaction.annotation.Transactional;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringBootTest
 @Transactional
@@ -43,10 +43,10 @@ class ReviewRepositoryImplTest {
         Pageable pageable = PageRequest.of(0, 2, Sort.by("rating").descending());
         Page<Review> result = reviewRepositoryImpl.findAllByGameIdAndRatingFilter("steam_1", 4, pageable);
 
-        assertThat(result.getContent()).hasSize(2);
-        assertThat(result.getContent().get(0).getRating()).isEqualTo(9);
-        assertThat(result.getContent().get(1).getRating()).isEqualTo(8);
-        assertThat(result.getTotalElements()).isEqualTo(2);
+        assertEquals(2, result.getContent().size());
+        assertEquals(9, result.getContent().get(0).getRating());
+        assertEquals(8, result.getContent().get(1).getRating());
+        assertEquals(2, result.getTotalElements());
     }
 
 }
