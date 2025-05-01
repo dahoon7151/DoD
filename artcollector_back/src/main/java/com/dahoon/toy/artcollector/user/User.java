@@ -1,4 +1,4 @@
-package com.dahoon.toy.artcollector.user.entity;
+package com.dahoon.toy.artcollector.user;
 
 import jakarta.persistence.*;
 import lombok.*;
@@ -15,7 +15,7 @@ public class User {
     private Long id;
 
     @Column(nullable = false)
-    private String username;
+    private String email;
 
     @Column(nullable = false)
     private String password;

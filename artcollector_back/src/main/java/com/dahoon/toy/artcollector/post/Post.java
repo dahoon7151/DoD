@@ -1,6 +1,6 @@
 package com.dahoon.toy.artcollector.post;
 
-import com.dahoon.toy.artcollector.user.entity.User;
+import com.dahoon.toy.artcollector.user.User;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;

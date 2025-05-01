@@ -1,4 +1,4 @@
-package com.dahoon.toy.artcollector.game.component;
+package com.dahoon.toy.artcollector.game;
 
 import com.dahoon.toy.artcollector.game.document.GameDetail;
 import lombok.extern.slf4j.Slf4j;

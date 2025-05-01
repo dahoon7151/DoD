@@ -26,7 +26,7 @@ public class QPost extends EntityPathBase<Post> {
 
     public final NumberPath<Long> id = createNumber("id", Long.class);
 
-    public final com.dahoon.toy.artcollector.user.entity.QUser member;
+    public final com.dahoon.toy.artcollector.user.QUser member;
 
     public final StringPath title = createString("title");
 
@@ -48,7 +48,7 @@ public class QPost extends EntityPathBase<Post> {
 
     public QPost(Class<? extends Post> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
-        this.member = inits.isInitialized("member") ? new com.dahoon.toy.artcollector.user.entity.QUser(forProperty("member")) : null;
+        this.member = inits.isInitialized("member") ? new com.dahoon.toy.artcollector.user.QUser(forProperty("member")) : null;
     }
 
 }

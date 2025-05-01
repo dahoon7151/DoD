@@ -1,4 +1,4 @@
-package com.dahoon.toy.artcollector.user.entity;
+package com.dahoon.toy.artcollector.user;
 
 import static com.querydsl.core.types.PathMetadataFactory.*;
 
@@ -15,17 +15,17 @@ import com.querydsl.core.types.Path;
 @Generated("com.querydsl.codegen.DefaultEntitySerializer")
 public class QUser extends EntityPathBase<User> {
 
-    private static final long serialVersionUID = 770914953L;
+    private static final long serialVersionUID = -1776550952L;
 
     public static final QUser user = new QUser("user");
+
+    public final StringPath email = createString("email");
 
     public final NumberPath<Long> id = createNumber("id", Long.class);
 
     public final StringPath nickname = createString("nickname");
 
     public final StringPath password = createString("password");
-
-    public final StringPath username = createString("username");
 
     public QUser(String variable) {
         super(User.class, forVariable(variable));

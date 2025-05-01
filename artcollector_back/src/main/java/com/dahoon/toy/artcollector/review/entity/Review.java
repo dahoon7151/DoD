@@ -1,12 +1,11 @@
 package com.dahoon.toy.artcollector.review.entity;
 
 import com.dahoon.toy.artcollector.common.BaseEntity;
-import com.dahoon.toy.artcollector.user.entity.User;
+import com.dahoon.toy.artcollector.user.User;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 @Entity

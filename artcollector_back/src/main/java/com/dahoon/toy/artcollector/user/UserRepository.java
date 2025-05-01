@@ -1,6 +1,5 @@
-package com.dahoon.toy.artcollector.user.repository;
+package com.dahoon.toy.artcollector.user;
 
-import com.dahoon.toy.artcollector.user.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface UserRepository extends JpaRepository<User,Long> {

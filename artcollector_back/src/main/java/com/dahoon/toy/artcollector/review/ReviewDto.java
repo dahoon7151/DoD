@@ -1,7 +1,7 @@
 package com.dahoon.toy.artcollector.review;
 
 import com.dahoon.toy.artcollector.review.entity.Review;
-import com.dahoon.toy.artcollector.user.entity.User;
+import com.dahoon.toy.artcollector.user.User;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 

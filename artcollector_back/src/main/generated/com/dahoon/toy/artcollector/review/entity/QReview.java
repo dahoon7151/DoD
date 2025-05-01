@@ -42,7 +42,7 @@ public class QReview extends EntityPathBase<Review> {
     //inherited
     public final DateTimePath<java.time.LocalDateTime> updatedTime = _super.updatedTime;
 
-    public final com.dahoon.toy.artcollector.user.entity.QUser user;
+    public final com.dahoon.toy.artcollector.user.QUser user;
 
     public QReview(String variable) {
         this(Review.class, forVariable(variable), INITS);
@@ -62,7 +62,7 @@ public class QReview extends EntityPathBase<Review> {
 
     public QReview(Class<? extends Review> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
-        this.user = inits.isInitialized("user") ? new com.dahoon.toy.artcollector.user.entity.QUser(forProperty("user")) : null;
+        this.user = inits.isInitialized("user") ? new com.dahoon.toy.artcollector.user.QUser(forProperty("user")) : null;
     }
 
 }

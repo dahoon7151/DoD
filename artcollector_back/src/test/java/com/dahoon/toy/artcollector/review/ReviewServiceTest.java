@@ -2,7 +2,7 @@ package com.dahoon.toy.artcollector.review;
 
 import com.dahoon.toy.artcollector.review.entity.Review;
 import com.dahoon.toy.artcollector.review.repository.ReviewRepository;
-import com.dahoon.toy.artcollector.user.entity.User;
+import com.dahoon.toy.artcollector.user.User;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -32,12 +32,12 @@ public class ReviewServiceTest {
 
     @BeforeEach
     void setUp() {
-        user1 = User.builder().username("dahoon1234").nickname("다훈").build();
-        user2 = User.builder().username("dahoon5678").nickname("다훈다훈").build();
+        user1 = User.builder().email("dahoon1@mail.com").password("다훈").build();
+        user2 = User.builder().email("dahoon2@mail.com").password("다훈다훈").build();
 
         reviewList = List.of(
-                Review.builder().content("꿀잼").rating(8).gameId("steam_1").user(user1).build(),
-                Review.builder().content("갓겜").rating(9).gameId("steam_1").user(user2).build()
+                Review.builder().content("꿀잼").rating(8).gameId("steam_1").user(user1).likeCount(0).build(),
+                Review.builder().content("갓겜").rating(9).gameId("steam_1").user(user2).likeCount(0).build()
         );
     }
 

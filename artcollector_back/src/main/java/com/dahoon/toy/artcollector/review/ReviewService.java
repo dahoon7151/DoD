@@ -2,7 +2,7 @@ package com.dahoon.toy.artcollector.review;
 
 import com.dahoon.toy.artcollector.review.entity.Review;
 import com.dahoon.toy.artcollector.review.repository.ReviewRepository;
-import com.dahoon.toy.artcollector.user.entity.User;
+import com.dahoon.toy.artcollector.user.User;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;

@@ -1,13 +1,10 @@
 package com.dahoon.toy.artcollector.game;
 
 import co.elastic.clients.elasticsearch.ElasticsearchClient;
-import com.dahoon.toy.artcollector.game.component.SteamApiClient;
-import com.dahoon.toy.artcollector.game.document.Game;
 import com.dahoon.toy.artcollector.game.document.GameDetail;
 import com.dahoon.toy.artcollector.game.dto.GameDetailDto;
 import com.dahoon.toy.artcollector.game.message.GameMessageProducer;
 import com.dahoon.toy.artcollector.game.repository.GameDetailRepository;
-import com.dahoon.toy.artcollector.game.service.GameService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -15,9 +12,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.data.domain.*;
 
-import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
