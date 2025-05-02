@@ -3,6 +3,7 @@ package com.dahoon.toy.artcollector.review;
 import com.dahoon.toy.artcollector.review.entity.Review;
 import com.dahoon.toy.artcollector.review.repository.ReviewRepository;
 import com.dahoon.toy.artcollector.user.User;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -44,8 +45,16 @@ public class ReviewService {
         } else {
             reviewPage = reviewRepository.findAllByGameId(gameId, pageable);
         }
-        log.info("게임 page 조회 완료");
+        log.info("리뷰 목록 조회 완료");
 
         return reviewPage.map(ReviewDto::toDto);
+    }
+
+    @Transactional(readOnly = true)
+    public ReviewDto getReview(Long id) {
+        Review review = reviewRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("해당 ID의 리뷰가 없습니다."));
+        log.info("리뷰 단일 조회 완료");
+
+        return ReviewDto.toDto(review);
     }
 }

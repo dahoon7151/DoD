@@ -12,6 +12,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.data.domain.*;
 
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
@@ -36,8 +37,8 @@ public class ReviewServiceTest {
         user2 = User.builder().email("dahoon2@mail.com").password("다훈다훈").build();
 
         reviewList = List.of(
-                Review.builder().content("갓겜").rating(9).gameId("steam_1").user(user2).likeCount(0).build(),
-                Review.builder().content("꿀잼").rating(8).gameId("steam_1").user(user1).likeCount(0).build()
+                Review.builder().id(1L).content("갓겜").rating(9).gameId("steam_1").user(user2).likeCount(0).build(),
+                Review.builder().id(2L).content("꿀잼").rating(8).gameId("steam_1").user(user1).likeCount(0).build()
         );
     }
 
@@ -74,5 +75,18 @@ public class ReviewServiceTest {
         //then
         assertEquals("꿀잼", reviewDtos.getContent().get(1).getContent());
         assertEquals("갓겜", reviewDtos.getContent().get(0).getContent());
+    }
+
+    @Test
+    void 리뷰단일조회(){
+        //given
+        Long id = 1L;
+        given(reviewRepository.findById(id)).willReturn(Optional.ofNullable(reviewList.get(0)));
+
+        //when
+        ReviewDto reviewDto = reviewService.getReview(id);
+
+        //then
+        assertEquals("갓겜", reviewDto.getContent());
     }
 }
