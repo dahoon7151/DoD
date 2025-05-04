@@ -57,4 +57,10 @@ public class ReviewService {
 
         return ReviewDto.toDto(review);
     }
+
+    @Transactional
+    public void deleteReview(Long id, User user) {
+        reviewRepository.deleteByIdAndCheckUser(id, user);
+        log.info("리뷰 삭제 완료");
+    }
 }

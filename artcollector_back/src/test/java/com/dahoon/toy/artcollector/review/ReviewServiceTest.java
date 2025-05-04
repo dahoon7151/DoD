@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.data.domain.*;
 
@@ -88,5 +89,17 @@ public class ReviewServiceTest {
 
         //then
         assertEquals("갓겜", reviewDto.getContent());
+    }
+
+    @Test
+    void 리뷰삭제(){
+        //given
+        Long id = 1L;
+
+        //when
+        reviewService.deleteReview(id, user1);
+
+        //then
+        Mockito.verify(reviewRepository).deleteByIdAndCheckUser(id, user1);
     }
 }

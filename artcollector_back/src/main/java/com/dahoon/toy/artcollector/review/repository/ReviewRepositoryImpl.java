@@ -2,12 +2,14 @@ package com.dahoon.toy.artcollector.review.repository;
 
 import com.dahoon.toy.artcollector.review.entity.QReview;
 import com.dahoon.toy.artcollector.review.entity.Review;
+import com.dahoon.toy.artcollector.user.User;
 import com.querydsl.core.types.Expression;
 import com.querydsl.core.types.Order;
 import com.querydsl.core.types.OrderSpecifier;
 import com.querydsl.core.types.dsl.PathBuilder;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -20,13 +22,13 @@ import java.util.List;
 @Repository
 public class ReviewRepositoryImpl implements ReviewRepositoryCustom{
     private final JPAQueryFactory queryFactory;
+    private final QReview review = QReview.review;
 
     public ReviewRepositoryImpl(JPAQueryFactory queryFactory) {
         this.queryFactory = queryFactory;
     }
     @Override
     public Page<Review> findAllByGameIdAndRatingFilter(String gameId, Integer minRating, Pageable pageable) {
-        QReview review = QReview.review;
         List<OrderSpecifier<?>> orderSpecifiers = getOrderSpecifiers(pageable.getSort());
 
         JPAQuery<Review> query = queryFactory
@@ -55,6 +57,21 @@ public class ReviewRepositoryImpl implements ReviewRepositoryCustom{
         return new PageImpl<>(results, pageable, total);
     }
 
+    @Override
+    public void deleteByIdAndCheckUser(Long id, User user) {
+        long deleted = queryFactory
+                .delete(review)
+                .where(
+                        review.id.eq(id),
+                        review.user.eq(user)
+                )
+                .execute();
+
+        if (deleted == 0) {
+            throw new EntityNotFoundException();
+        }
+
+    }
 
     private List<OrderSpecifier<?>> getOrderSpecifiers(Sort sort) {
         List<OrderSpecifier<?>> orderSpecifiers = new ArrayList<>();

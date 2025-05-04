@@ -49,4 +49,8 @@ class ReviewRepositoryImplTest {
         assertEquals(2, result.getTotalElements());
     }
 
+    @Test
+    void deleteByIdAndCheckUser_성공() {
+
+    }
 }
