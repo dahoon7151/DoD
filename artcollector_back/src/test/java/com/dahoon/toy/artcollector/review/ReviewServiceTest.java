@@ -49,10 +49,8 @@ public class ReviewServiceTest {
         ReviewDto request = new ReviewDto("재밌어요", 10, "steam_1234");
         Review review = request.toEntity(user1);
         given(reviewRepository.save(any(Review.class))).willReturn(review);
-
         //when
         ReviewDto response = reviewService.writeReview(request, user1);
-
         //then
         assertEquals("재밌어요", response.getContent());
         assertEquals(10, response.getRating());
@@ -69,10 +67,8 @@ public class ReviewServiceTest {
         Pageable pageable = PageRequest.of(page, count, Sort.by(Sort.Order.desc("rating")));
         Page<Review> reviewPage = new PageImpl<>(reviewList, pageable, 10);
         given(reviewRepository.findAllByGameId(gameId, pageable)).willReturn(reviewPage);
-
         //when
         Page<ReviewDto> reviewDtos = reviewService.getReviewsByGame(page, count, order, gameId, null);
-
         //then
         assertEquals("꿀잼", reviewDtos.getContent().get(1).getContent());
         assertEquals("갓겜", reviewDtos.getContent().get(0).getContent());
@@ -83,10 +79,8 @@ public class ReviewServiceTest {
         //given
         Long id = 1L;
         given(reviewRepository.findById(id)).willReturn(Optional.ofNullable(reviewList.get(0)));
-
         //when
         ReviewDto reviewDto = reviewService.getReview(id);
-
         //then
         assertEquals("갓겜", reviewDto.getContent());
     }
@@ -95,10 +89,8 @@ public class ReviewServiceTest {
     void 리뷰삭제(){
         //given
         Long id = 1L;
-
         //when
         reviewService.deleteReview(id, user1);
-
         //then
         Mockito.verify(reviewRepository).deleteByIdAndCheckUser(id, user1);
     }
