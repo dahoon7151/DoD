@@ -1,5 +1,6 @@
 package com.dahoon.toy.artcollector.review.repository;
 
+import com.dahoon.toy.artcollector.review.ReviewDto;
 import com.dahoon.toy.artcollector.review.entity.QReview;
 import com.dahoon.toy.artcollector.review.entity.Review;
 import com.dahoon.toy.artcollector.user.User;
@@ -31,7 +32,7 @@ public class ReviewRepositoryImpl implements ReviewRepositoryCustom{
     public Page<Review> findAllByGameIdAndRatingFilter(String gameId, Integer minRating, Pageable pageable) {
         List<OrderSpecifier<?>> orderSpecifiers = getOrderSpecifiers(pageable.getSort());
 
-        JPAQuery<Review> query = queryFactory
+        List<Review> results = queryFactory
                 .selectFrom(review)
                 .where(
                         review.gameId.eq(gameId),
@@ -39,9 +40,9 @@ public class ReviewRepositoryImpl implements ReviewRepositoryCustom{
                 )
                 .orderBy(orderSpecifiers.toArray(new OrderSpecifier[0]))
                 .offset(pageable.getOffset())
-                .limit(pageable.getPageSize());
+                .limit(pageable.getPageSize())
+                .fetch();
 
-        List<Review> results = query.fetch();
 
         Long totalResult = queryFactory
                 .select(review.count())
@@ -71,6 +72,21 @@ public class ReviewRepositoryImpl implements ReviewRepositoryCustom{
             throw new EntityNotFoundException();
         }
 
+    }
+
+    @Override
+    public void saveByIdAndCheckUser(Long id, User user, ReviewDto reviewDto) {
+        long updated = queryFactory
+                .update(review)
+                .set(review.content, reviewDto.getContent())
+                .set(review.rating, reviewDto.getRating())
+                .where(review.id.eq(id),
+                        review.user.eq(user))
+                .execute();
+
+        if (updated == 0) {
+            throw new EntityNotFoundException();
+        }
     }
 
     private List<OrderSpecifier<?>> getOrderSpecifiers(Sort sort) {

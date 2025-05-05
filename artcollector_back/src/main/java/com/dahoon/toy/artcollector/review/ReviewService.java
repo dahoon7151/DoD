@@ -3,6 +3,7 @@ package com.dahoon.toy.artcollector.review;
 import com.dahoon.toy.artcollector.review.entity.Review;
 import com.dahoon.toy.artcollector.review.repository.ReviewRepository;
 import com.dahoon.toy.artcollector.user.User;
+import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -17,7 +18,8 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 @Slf4j
 public class ReviewService {
-    final ReviewRepository reviewRepository;
+    private final ReviewRepository reviewRepository;
+    private final EntityManager entityManager;
 
     @Transactional
     public ReviewDto writeReview(ReviewDto request, User user) {
@@ -62,5 +64,17 @@ public class ReviewService {
     public void deleteReview(Long id, User user) {
         reviewRepository.deleteByIdAndCheckUser(id, user);
         log.info("리뷰 삭제 완료");
+    }
+
+    @Transactional
+    public ReviewDto updateReview(Long id, User user, ReviewDto reviewDto) {
+        reviewRepository.saveByIdAndCheckUser(id, user, reviewDto);
+        log.info("리뷰 수정 완료");
+        entityManager.flush();
+        entityManager.clear();
+        Review review = reviewRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("해당 ID의 리뷰가 없습니다."));
+        log.info("수정된 리뷰 확인");
+
+        return ReviewDto.toDto(review);
     }
 }

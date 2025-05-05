@@ -1,5 +1,6 @@
 package com.dahoon.toy.artcollector.review.repository;
 
+import com.dahoon.toy.artcollector.review.ReviewDto;
 import com.dahoon.toy.artcollector.review.entity.Review;
 import com.dahoon.toy.artcollector.user.User;
 import org.springframework.data.domain.Page;
@@ -9,4 +10,6 @@ public interface ReviewRepositoryCustom {
     Page<Review> findAllByGameIdAndRatingFilter(String gameId, Integer minRating, Pageable pageable);
 
     void deleteByIdAndCheckUser(Long id, User user);
+
+    void saveByIdAndCheckUser(Long id, User user, ReviewDto reviewDto);
 }

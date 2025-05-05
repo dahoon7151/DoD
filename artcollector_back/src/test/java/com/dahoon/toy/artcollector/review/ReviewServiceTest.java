@@ -77,7 +77,7 @@ public class ReviewServiceTest {
     @Test
     void 리뷰단일조회(){
         //given
-        Long id = 1L;
+        Long id = reviewList.get(0).getId();
         given(reviewRepository.findById(id)).willReturn(Optional.ofNullable(reviewList.get(0)));
         //when
         ReviewDto reviewDto = reviewService.getReview(id);
@@ -88,10 +88,25 @@ public class ReviewServiceTest {
     @Test
     void 리뷰삭제(){
         //given
-        Long id = 1L;
+        Long id = reviewList.get(0).getId();
         //when
         reviewService.deleteReview(id, user1);
         //then
         Mockito.verify(reviewRepository).deleteByIdAndCheckUser(id, user1);
+    }
+
+    @Test
+    void 리뷰수정(){
+        //given
+        Long id = reviewList.get(0).getId();
+        User user = reviewList.get(0).getUser();
+        ReviewDto request = new ReviewDto("초갓겜", 10, "steam_1");
+        Review review = request.toEntity(user);
+        given(reviewRepository.findById(id)).willReturn(Optional.ofNullable(review));
+        //when
+        ReviewDto result = reviewService.updateReview(id, user, request);
+        //then
+        assertEquals("초갓겜", result.getContent());
+        assertEquals(10, result.getRating());
     }
 }

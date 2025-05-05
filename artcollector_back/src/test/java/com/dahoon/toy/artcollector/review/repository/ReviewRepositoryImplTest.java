@@ -1,13 +1,12 @@
 package com.dahoon.toy.artcollector.review.repository;
 
 import com.dahoon.toy.artcollector.common.config.QueryDSLConfig;
+import com.dahoon.toy.artcollector.review.ReviewDto;
 import com.dahoon.toy.artcollector.review.entity.Review;
 import com.dahoon.toy.artcollector.user.User;
 import com.dahoon.toy.artcollector.user.UserRepository;
-import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityNotFoundException;
-import jakarta.persistence.PersistenceContext;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +18,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.test.context.ActiveProfiles;
-import org.springframework.transaction.annotation.Transactional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -35,6 +33,8 @@ class ReviewRepositoryImplTest {
     private ReviewRepository reviewRepository;
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private EntityManager entityManager;
 
     private User user1;
     private User user2;
@@ -82,5 +82,22 @@ class ReviewRepositoryImplTest {
         Long id = review1.getId();
         //when & then
         assertThrows(EntityNotFoundException.class, () -> reviewRepositoryImpl.deleteByIdAndCheckUser(id, user2));
+    }
+
+    @Test
+    void saveByIdAndCheckUser_성공() {
+        //given
+        Long id = review1.getId();
+        User user = review1.getUser();
+        ReviewDto reviewDto = new ReviewDto("초갓겜", 10, "steam_1");
+        //when
+        reviewRepositoryImpl.saveByIdAndCheckUser(id, user, reviewDto);
+        entityManager.flush();
+        entityManager.clear();
+
+        //then
+        Review result = reviewRepository.findById(id).orElseThrow(() -> new AssertionError("리뷰 수정 확인 실패"));
+        assertEquals("초갓겜", result.getContent());
+        assertEquals(10, result.getRating());
     }
 }
