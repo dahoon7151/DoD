@@ -1,7 +1,12 @@
 package com.dahoon.toy.artcollector.user;
 
+import com.dahoon.toy.artcollector.review.entity.Review;
+import com.dahoon.toy.artcollector.review.entity.ReviewLike;
 import jakarta.persistence.*;
 import lombok.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Builder
@@ -20,6 +25,18 @@ public class User {
     @Column(nullable = false)
     private String password;
 
-    @Column
+    @Column(nullable = false)
     private String nickname;
+
+    @OneToMany(mappedBy = "user", orphanRemoval = true)
+    @Builder.Default
+    private List<Review> reviews = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE, orphanRemoval = true)
+    @Builder.Default
+    private List<ReviewLike> reviewLikes = new ArrayList<>();
+
+    @Column(nullable = false)
+    @Builder.Default
+    private boolean deleted = false;
 }

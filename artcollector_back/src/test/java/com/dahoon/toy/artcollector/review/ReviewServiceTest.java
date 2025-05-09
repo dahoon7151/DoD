@@ -34,12 +34,12 @@ public class ReviewServiceTest {
 
     @BeforeEach
     void setUp() {
-        user1 = User.builder().email("dahoon1@mail.com").password("다훈").build();
-        user2 = User.builder().email("dahoon2@mail.com").password("다훈다훈").build();
+        user1 = User.builder().email("dahoon1@mail.com").password("다훈").nickname("tester1").build();
+        user2 = User.builder().email("dahoon2@mail.com").password("다훈다훈").nickname("tester2").build();
 
         reviewList = List.of(
-                Review.builder().id(1L).content("갓겜").rating(9).gameId("steam_1").user(user2).likeCount(0).build(),
-                Review.builder().id(2L).content("꿀잼").rating(8).gameId("steam_1").user(user1).likeCount(0).build()
+                Review.builder().id(1L).content("갓겜").rating(9).gameId("steam_1").user(user2).build(),
+                Review.builder().id(2L).content("꿀잼").rating(8).gameId("steam_1").user(user1).build()
         );
     }
 

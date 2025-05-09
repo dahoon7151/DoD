@@ -21,10 +21,10 @@ import org.springframework.test.context.ActiveProfiles;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+@ActiveProfiles("test")
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 @Import({QueryDSLConfig.class, ReviewRepositoryImpl.class})
-@ActiveProfiles("test")
 class ReviewRepositoryImplTest {
 
     @Autowired
@@ -44,12 +44,12 @@ class ReviewRepositoryImplTest {
 
     @BeforeEach
     void setUp() {
-        user1 = userRepository.save(User.builder().email("dahoon1@test.com").password("다훈").build());
-        user2 = userRepository.save(User.builder().email("dahoon2@test.com").password("다훈다훈").build());
+        user1 = userRepository.save(User.builder().email("dahoon1@test.com").password("다훈").nickname("tester1").build());
+        user2 = userRepository.save(User.builder().email("dahoon2@test.com").password("다훈다훈").nickname("tester2").build());
 
-        review1 = reviewRepository.save(Review.builder().content("test꿀잼").rating(8).gameId("steam_1").user(user1).likeCount(0).build());
-        review2 = reviewRepository.save(Review.builder().content("test갓겜").rating(9).gameId("steam_1").user(user2).likeCount(0).build());
-        review3 = reviewRepository.save(Review.builder().content("test똥겜").rating(2).gameId("steam_1").user(user2).likeCount(0).build());
+        review1 = reviewRepository.save(Review.builder().content("test꿀잼").rating(8).gameId("steam_1").user(user1).build());
+        review2 = reviewRepository.save(Review.builder().content("test갓겜").rating(9).gameId("steam_1").user(user2).build());
+        review3 = reviewRepository.save(Review.builder().content("test똥겜").rating(2).gameId("steam_1").user(user2).build());
     }
 
     @Test

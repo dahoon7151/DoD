@@ -1,5 +1,6 @@
 package com.dahoon.toy.artcollector.review.entity;
 
+import com.dahoon.toy.artcollector.user.User;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -19,4 +20,8 @@ public class ReviewLike {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "review_id", nullable = false)
     private Review review;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
 }

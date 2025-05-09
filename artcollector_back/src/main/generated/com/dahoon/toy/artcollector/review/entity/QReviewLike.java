@@ -26,6 +26,8 @@ public class QReviewLike extends EntityPathBase<ReviewLike> {
 
     public final QReview review;
 
+    public final com.dahoon.toy.artcollector.user.QUser user;
+
     public QReviewLike(String variable) {
         this(ReviewLike.class, forVariable(variable), INITS);
     }
@@ -45,6 +47,7 @@ public class QReviewLike extends EntityPathBase<ReviewLike> {
     public QReviewLike(Class<? extends ReviewLike> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
         this.review = inits.isInitialized("review") ? new QReview(forProperty("review"), inits.get("review")) : null;
+        this.user = inits.isInitialized("user") ? new com.dahoon.toy.artcollector.user.QUser(forProperty("user")) : null;
     }
 
 }

@@ -29,6 +29,8 @@ public class QReview extends EntityPathBase<Review> {
     //inherited
     public final DateTimePath<java.time.LocalDateTime> createdTime = _super.createdTime;
 
+    public final BooleanPath deleted = createBoolean("deleted");
+
     public final StringPath gameId = createString("gameId");
 
     public final NumberPath<Long> id = createNumber("id", Long.class);

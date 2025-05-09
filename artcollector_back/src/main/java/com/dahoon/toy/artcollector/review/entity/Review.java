@@ -30,10 +30,15 @@ public class Review extends BaseEntity {
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-    @OneToMany(mappedBy = "review", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "review", cascade = CascadeType.REMOVE, orphanRemoval = true)
     @Builder.Default
     private List<ReviewLike> likes = new ArrayList<>();
 
     @Column(nullable = false)
-    private Integer likeCount;
+    @Builder.Default
+    private int likeCount = 0;
+
+    @Column(nullable = false)
+    @Builder.Default
+    private boolean deleted = false;
 }

@@ -7,6 +7,7 @@ import com.querydsl.core.types.dsl.*;
 import com.querydsl.core.types.PathMetadata;
 import javax.annotation.processing.Generated;
 import com.querydsl.core.types.Path;
+import com.querydsl.core.types.dsl.PathInits;
 
 
 /**
@@ -19,6 +20,8 @@ public class QUser extends EntityPathBase<User> {
 
     public static final QUser user = new QUser("user");
 
+    public final BooleanPath deleted = createBoolean("deleted");
+
     public final StringPath email = createString("email");
 
     public final NumberPath<Long> id = createNumber("id", Long.class);
@@ -26,6 +29,10 @@ public class QUser extends EntityPathBase<User> {
     public final StringPath nickname = createString("nickname");
 
     public final StringPath password = createString("password");
+
+    public final ListPath<com.dahoon.toy.artcollector.review.entity.ReviewLike, com.dahoon.toy.artcollector.review.entity.QReviewLike> reviewLikes = this.<com.dahoon.toy.artcollector.review.entity.ReviewLike, com.dahoon.toy.artcollector.review.entity.QReviewLike>createList("reviewLikes", com.dahoon.toy.artcollector.review.entity.ReviewLike.class, com.dahoon.toy.artcollector.review.entity.QReviewLike.class, PathInits.DIRECT2);
+
+    public final ListPath<com.dahoon.toy.artcollector.review.entity.Review, com.dahoon.toy.artcollector.review.entity.QReview> reviews = this.<com.dahoon.toy.artcollector.review.entity.Review, com.dahoon.toy.artcollector.review.entity.QReview>createList("reviews", com.dahoon.toy.artcollector.review.entity.Review.class, com.dahoon.toy.artcollector.review.entity.QReview.class, PathInits.DIRECT2);
 
     public QUser(String variable) {
         super(User.class, forVariable(variable));
