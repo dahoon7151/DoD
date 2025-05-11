@@ -3,6 +3,7 @@ package com.dahoon.toy.artcollector.review;
 import com.dahoon.toy.artcollector.review.entity.Review;
 import com.dahoon.toy.artcollector.review.repository.ReviewRepository;
 import com.dahoon.toy.artcollector.user.User;
+import jakarta.persistence.EntityManager;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -27,6 +28,8 @@ public class ReviewServiceTest {
 
     @Mock
     private ReviewRepository reviewRepository;
+    @Mock
+    private EntityManager entityManager;
 
     private User user1;
     private User user2;

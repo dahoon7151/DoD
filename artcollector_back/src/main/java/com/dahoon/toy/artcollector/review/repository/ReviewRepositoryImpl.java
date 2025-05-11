@@ -36,7 +36,8 @@ public class ReviewRepositoryImpl implements ReviewRepositoryCustom{
                 .selectFrom(review)
                 .where(
                         review.gameId.eq(gameId),
-                        review.rating.goe(minRating)
+                        review.rating.goe(minRating),
+                        review.deleted.isFalse()
                 )
                 .orderBy(orderSpecifiers.toArray(new OrderSpecifier[0]))
                 .offset(pageable.getOffset())
@@ -49,7 +50,8 @@ public class ReviewRepositoryImpl implements ReviewRepositoryCustom{
                 .from(review)
                 .where(
                         review.gameId.eq(gameId),
-                        review.rating.goe(minRating)
+                        review.rating.goe(minRating),
+                        review.deleted.isFalse()
                 )
                 .fetchOne();
 
@@ -64,7 +66,8 @@ public class ReviewRepositoryImpl implements ReviewRepositoryCustom{
                 .delete(review)
                 .where(
                         review.id.eq(id),
-                        review.user.eq(user)
+                        review.user.eq(user),
+                        review.deleted.isFalse()
                 )
                 .execute();
 

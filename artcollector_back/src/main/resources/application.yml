@@ -12,13 +12,13 @@ spring:
   jpa:
     database: mysql
     database-platform: org.hibernate.dialect.MySQL8Dialect
-
     hibernate:
       ddl-auto: update
     properties:
       hibernate:
         format_sql: true
         default_batch_fetch_size: 100
+    show-sql: true
 
   data:
     mongodb:
