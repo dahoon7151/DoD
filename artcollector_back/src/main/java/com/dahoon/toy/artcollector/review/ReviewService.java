@@ -54,7 +54,7 @@ public class ReviewService {
 
     @Transactional(readOnly = true)
     public ReviewDto getReview(Long id) {
-        Review review = reviewRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("해당 ID의 리뷰가 없습니다."));
+                Review review = reviewRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("해당 ID의 리뷰가 없습니다."));
         log.info("리뷰 단일 조회 완료");
 
         return ReviewDto.toDto(review);

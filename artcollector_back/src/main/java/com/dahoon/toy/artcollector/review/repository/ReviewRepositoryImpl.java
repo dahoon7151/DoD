@@ -62,8 +62,9 @@ public class ReviewRepositoryImpl implements ReviewRepositoryCustom{
 
     @Override
     public void deleteByIdAndCheckUser(Long id, User user) {
-        long deleted = queryFactory
-                .delete(review)
+        long updated = queryFactory
+                .update(review)
+                .set(review.deleted, true)
                 .where(
                         review.id.eq(id),
                         review.user.eq(user),
@@ -71,7 +72,7 @@ public class ReviewRepositoryImpl implements ReviewRepositoryCustom{
                 )
                 .execute();
 
-        if (deleted == 0) {
+        if (updated == 0) {
             throw new EntityNotFoundException();
         }
 
@@ -83,8 +84,11 @@ public class ReviewRepositoryImpl implements ReviewRepositoryCustom{
                 .update(review)
                 .set(review.content, reviewDto.getContent())
                 .set(review.rating, reviewDto.getRating())
-                .where(review.id.eq(id),
-                        review.user.eq(user))
+                .where(
+                        review.id.eq(id),
+                        review.user.eq(user),
+                        review.deleted.isFalse()
+                )
                 .execute();
 
         if (updated == 0) {
