@@ -15,6 +15,7 @@ import java.util.List;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 @SQLRestriction("deleted = false")
+@Table(indexes = @Index(name = "idx_user_id_deleted", columnList = "user_id, deleted"))
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

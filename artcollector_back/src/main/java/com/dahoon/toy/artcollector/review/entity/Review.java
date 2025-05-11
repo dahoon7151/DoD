@@ -15,6 +15,7 @@ import java.util.List;
 @Getter
 @Builder
 @SQLRestriction("deleted = false")
+@Table(indexes = @Index(name = "idx_review_id_deleted", columnList = "review_id, deleted"))
 public class Review extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
