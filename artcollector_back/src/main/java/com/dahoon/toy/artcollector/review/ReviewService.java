@@ -26,7 +26,7 @@ public class ReviewService {
         Review review = reviewRepository.save(request.toEntity(user));
         log.info("리뷰 저장 완료");
 
-        return ReviewDto.toDto(review);
+        return ReviewDto.toDto(review, user.getNickname());
     }
 
     @Transactional(readOnly = true)
@@ -49,7 +49,12 @@ public class ReviewService {
         }
         log.info("리뷰 목록 조회 완료");
 
-        return reviewPage.map(ReviewDto::toDto);
+        return reviewPage.map(review -> {
+            String writer = review.getUser().isDeleted()
+                    ? "탈퇴한 사용자"
+                    : review.getUser().getNickname();
+            return ReviewDto.toDto(review, writer);
+        });
     }
 
     @Transactional(readOnly = true)
@@ -57,7 +62,11 @@ public class ReviewService {
                 Review review = reviewRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("해당 ID의 리뷰가 없습니다."));
         log.info("리뷰 단일 조회 완료");
 
-        return ReviewDto.toDto(review);
+        String writer = (review.getUser().isDeleted())
+                ? "탈퇴한 사용자"
+                : review.getUser().getNickname();
+
+        return ReviewDto.toDto(review, writer);
     }
 
     @Transactional
@@ -75,6 +84,6 @@ public class ReviewService {
         Review review = reviewRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("해당 ID의 리뷰가 없습니다."));
         log.info("수정된 리뷰 확인");
 
-        return ReviewDto.toDto(review);
+        return ReviewDto.toDto(review, user.getNickname());
     }
 }

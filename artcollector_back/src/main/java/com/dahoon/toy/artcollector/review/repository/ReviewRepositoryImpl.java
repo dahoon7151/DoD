@@ -3,6 +3,7 @@ package com.dahoon.toy.artcollector.review.repository;
 import com.dahoon.toy.artcollector.review.ReviewDto;
 import com.dahoon.toy.artcollector.review.entity.QReview;
 import com.dahoon.toy.artcollector.review.entity.Review;
+import com.dahoon.toy.artcollector.user.QUser;
 import com.dahoon.toy.artcollector.user.User;
 import com.querydsl.core.types.Expression;
 import com.querydsl.core.types.Order;
@@ -23,7 +24,8 @@ import java.util.List;
 @Repository
 public class ReviewRepositoryImpl implements ReviewRepositoryCustom{
     private final JPAQueryFactory queryFactory;
-    private final QReview review = QReview.review;
+    private static final QReview review = QReview.review;
+    private static final QUser user = QUser.user;
 
     public ReviewRepositoryImpl(JPAQueryFactory queryFactory) {
         this.queryFactory = queryFactory;
@@ -34,6 +36,7 @@ public class ReviewRepositoryImpl implements ReviewRepositoryCustom{
 
         List<Review> results = queryFactory
                 .selectFrom(review)
+                .join(review.user, user).fetchJoin()
                 .where(
                         review.gameId.eq(gameId),
                         review.rating.goe(minRating),
