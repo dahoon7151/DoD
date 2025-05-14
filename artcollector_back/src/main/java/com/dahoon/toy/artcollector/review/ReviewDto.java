@@ -22,14 +22,10 @@ public class ReviewDto {
         this.gameId = gameId;
     }
 
-    public static ReviewDto toDto(Review review) {
+    public static ReviewDto toDto(Review review, String writer) {
         String modifiedTime = (review.getUpdatedTime() != null)
                 ? review.getUpdatedTime().toString()
                 : review.getCreatedTime().toString();
-
-        String writer = (review.getUser().isDeleted())
-                ? "탈퇴한 사용자"
-                : review.getUser().getNickname();
 
         return new ReviewDto(
                 review.getContent(),
