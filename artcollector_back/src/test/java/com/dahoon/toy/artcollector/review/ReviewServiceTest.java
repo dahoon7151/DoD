@@ -1,6 +1,8 @@
 package com.dahoon.toy.artcollector.review;
 
 import com.dahoon.toy.artcollector.review.entity.Review;
+import com.dahoon.toy.artcollector.review.entity.ReviewLike;
+import com.dahoon.toy.artcollector.review.repository.ReviewLikeRepository;
 import com.dahoon.toy.artcollector.review.repository.ReviewRepository;
 import com.dahoon.toy.artcollector.user.User;
 import jakarta.persistence.EntityManager;
@@ -28,6 +30,8 @@ public class ReviewServiceTest {
     private ReviewService reviewService;
     @Mock
     private ReviewRepository reviewRepository;
+    @Mock
+    private ReviewLikeRepository reviewLikeRepository
     @Mock
     private EntityManager entityManager;
 
@@ -119,5 +123,18 @@ public class ReviewServiceTest {
         assertEquals("초갓겜", result.getContent());
         assertEquals(10, result.getRating());
         assertEquals("tester2", result.getWriter());
+    }
+
+    @Test
+    void 리뷰좋아요(){
+        //given
+        User user = user1;
+        Review review = reviewList.get(0);
+        ReviewLike reviewLike = null;
+        given(reviewLikeRepository.save(reviewLike)).willReturn();
+        //when
+        ReviewDto result = reviewService.like(user, review);
+        //then
+
     }
 }

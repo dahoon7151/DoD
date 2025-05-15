@@ -89,7 +89,7 @@ class ReviewRepositoryImplTest {
         User user = review1.getUser();
         ReviewDto reviewDto = new ReviewDto("초갓겜", 10, "steam_1");
         //when
-        reviewRepositoryImpl.saveByIdAndCheckUser(id, user, reviewDto);
+        reviewRepositoryImpl.updateByIdAndCheckUser(id, user, reviewDto);
         entityManager.flush();
         entityManager.clear();
 

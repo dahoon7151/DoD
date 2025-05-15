@@ -11,5 +11,5 @@ public interface ReviewRepositoryCustom {
 
     void deleteByIdAndCheckUser(Long id, User user);
 
-    void saveByIdAndCheckUser(Long id, User user, ReviewDto reviewDto);
+    void updateByIdAndCheckUser(Long id, User user, ReviewDto reviewDto);
 }

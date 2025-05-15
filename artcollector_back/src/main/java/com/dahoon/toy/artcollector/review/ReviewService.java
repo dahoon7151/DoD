@@ -1,6 +1,8 @@
 package com.dahoon.toy.artcollector.review;
 
 import com.dahoon.toy.artcollector.review.entity.Review;
+import com.dahoon.toy.artcollector.review.entity.ReviewLike;
+import com.dahoon.toy.artcollector.review.repository.ReviewLikeRepository;
 import com.dahoon.toy.artcollector.review.repository.ReviewRepository;
 import com.dahoon.toy.artcollector.user.User;
 import jakarta.persistence.EntityManager;
@@ -19,6 +21,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Slf4j
 public class ReviewService {
     private final ReviewRepository reviewRepository;
+    private final ReviewLikeRepository reviewLikeRepository;
     private final EntityManager entityManager;
 
     @Transactional
@@ -77,7 +80,7 @@ public class ReviewService {
 
     @Transactional
     public ReviewDto updateReview(Long id, User user, ReviewDto reviewDto) {
-        reviewRepository.saveByIdAndCheckUser(id, user, reviewDto);
+        reviewRepository.updateByIdAndCheckUser(id, user, reviewDto);
         log.info("리뷰 수정 완료");
         entityManager.flush();
         entityManager.clear();
@@ -85,5 +88,17 @@ public class ReviewService {
         log.info("수정된 리뷰 확인");
 
         return ReviewDto.toDto(review, user.getNickname());
+    }
+
+    @Transactional
+    public ReviewDto like(User user, Review review) {
+        ReviewLike like = ReviewLike.builder()
+                .review(review)
+                .user(user)
+                .build();
+        reviewLikeRepository.save(like);
+        log.info("좋아요 등록 완료");
+
+        return ;
     }
 }
