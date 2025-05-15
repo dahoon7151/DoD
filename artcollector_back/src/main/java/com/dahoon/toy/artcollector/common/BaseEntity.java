@@ -26,4 +26,12 @@ public abstract class BaseEntity {
     public LocalDateTime getUpdatedTime() {
         return updatedTime;
     }
+
+    // Test 전용 Setter
+    public void setCreatedTime(LocalDateTime createdTime) {
+        this.createdTime = createdTime;
+    }
+    public void setUpdatedTime(LocalDateTime updatedTime) {
+        this.updatedTime = updatedTime;
+    }
 }

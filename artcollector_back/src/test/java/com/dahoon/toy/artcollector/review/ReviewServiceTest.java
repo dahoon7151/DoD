@@ -1,6 +1,8 @@
 package com.dahoon.toy.artcollector.review;
 
 import com.dahoon.toy.artcollector.review.entity.Review;
+import com.dahoon.toy.artcollector.review.entity.ReviewLike;
+import com.dahoon.toy.artcollector.review.repository.ReviewLikeRepository;
 import com.dahoon.toy.artcollector.review.repository.ReviewRepository;
 import com.dahoon.toy.artcollector.user.User;
 import jakarta.persistence.EntityManager;
@@ -13,6 +15,7 @@ import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.data.domain.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -25,9 +28,10 @@ public class ReviewServiceTest {
 
     @InjectMocks
     private ReviewService reviewService;
-
     @Mock
     private ReviewRepository reviewRepository;
+    @Mock
+    private ReviewLikeRepository reviewLikeRepository
     @Mock
     private EntityManager entityManager;
 
@@ -44,6 +48,8 @@ public class ReviewServiceTest {
                 Review.builder().id(1L).content("갓겜").rating(9).gameId("steam_1").user(user2).build(),
                 Review.builder().id(2L).content("꿀잼").rating(8).gameId("steam_1").user(user1).build()
         );
+        reviewList.get(0).setCreatedTime(LocalDateTime.now());
+        reviewList.get(1).setCreatedTime(LocalDateTime.now());
     }
 
     @Test
@@ -51,6 +57,7 @@ public class ReviewServiceTest {
         //given
         ReviewDto request = new ReviewDto("재밌어요", 10, "steam_1234");
         Review review = request.toEntity(user1);
+        review.setCreatedTime(LocalDateTime.now());
         given(reviewRepository.save(any(Review.class))).willReturn(review);
         //when
         ReviewDto response = reviewService.writeReview(request, user1);
@@ -58,6 +65,7 @@ public class ReviewServiceTest {
         assertEquals("재밌어요", response.getContent());
         assertEquals(10, response.getRating());
         assertEquals("steam_1234", response.getGameId());
+        assertEquals("tester1", response.getWriter());
     }
 
     @Test
@@ -75,6 +83,7 @@ public class ReviewServiceTest {
         //then
         assertEquals("꿀잼", reviewDtos.getContent().get(1).getContent());
         assertEquals("갓겜", reviewDtos.getContent().get(0).getContent());
+        assertEquals("tester2", reviewDtos.getContent().get(0).getWriter());
     }
 
     @Test
@@ -86,6 +95,7 @@ public class ReviewServiceTest {
         ReviewDto reviewDto = reviewService.getReview(id);
         //then
         assertEquals("갓겜", reviewDto.getContent());
+        assertEquals("tester2", reviewDto.getWriter());
     }
 
     @Test
@@ -105,11 +115,26 @@ public class ReviewServiceTest {
         User user = reviewList.get(0).getUser();
         ReviewDto request = new ReviewDto("초갓겜", 10, "steam_1");
         Review review = request.toEntity(user);
+        review.setCreatedTime(LocalDateTime.now());
         given(reviewRepository.findById(id)).willReturn(Optional.ofNullable(review));
         //when
         ReviewDto result = reviewService.updateReview(id, user, request);
         //then
         assertEquals("초갓겜", result.getContent());
         assertEquals(10, result.getRating());
+        assertEquals("tester2", result.getWriter());
+    }
+
+    @Test
+    void 리뷰좋아요(){
+        //given
+        User user = user1;
+        Review review = reviewList.get(0);
+        ReviewLike reviewLike = null;
+        given(reviewLikeRepository.save(reviewLike)).willReturn();
+        //when
+        ReviewDto result = reviewService.like(user, review);
+        //then
+
     }
 }

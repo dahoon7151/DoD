@@ -82,7 +82,7 @@ public class ReviewRepositoryImpl implements ReviewRepositoryCustom{
     }
 
     @Override
-    public void saveByIdAndCheckUser(Long id, User user, ReviewDto reviewDto) {
+    public void updateByIdAndCheckUser(Long id, User user, ReviewDto reviewDto) {
         long updated = queryFactory
                 .update(review)
                 .set(review.content, reviewDto.getContent())
