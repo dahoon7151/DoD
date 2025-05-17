@@ -1,5 +1,7 @@
 package com.dahoon.toy.artcollector.review;
 
+import com.dahoon.toy.artcollector.review.dto.ReviewDto;
+import com.dahoon.toy.artcollector.review.dto.ReviewLikeDto;
 import com.dahoon.toy.artcollector.review.entity.Review;
 import com.dahoon.toy.artcollector.review.entity.ReviewLike;
 import com.dahoon.toy.artcollector.review.repository.ReviewLikeRepository;
@@ -9,6 +11,7 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -91,14 +94,20 @@ public class ReviewService {
     }
 
     @Transactional
-    public ReviewDto like(User user, Review review) {
+    public ReviewLikeDto toggleReviewLike(User user, Long reviewId) {
+        Review review = reviewRepository.findById(reviewId).orElseThrow(() -> new EntityNotFoundException("해당 ID의 리뷰가 없습니다."));
         ReviewLike like = ReviewLike.builder()
                 .review(review)
                 .user(user)
                 .build();
-        reviewLikeRepository.save(like);
-        log.info("좋아요 등록 완료");
-
-        return ;
+        try {
+            reviewLikeRepository.save(like);
+            log.info("좋아요 등록");
+            return ReviewLikeDto.toDto(true, reviewRepository.likeCountUp(reviewId));
+        } catch (DataIntegrityViolationException e) {
+            reviewLikeRepository.deleteByUserAndReview(user, review);
+            log.info("좋아요 취소");
+            return ReviewLikeDto.toDto(false, reviewRepository.likeCountDown(reviewId));
+        }
     }
 }

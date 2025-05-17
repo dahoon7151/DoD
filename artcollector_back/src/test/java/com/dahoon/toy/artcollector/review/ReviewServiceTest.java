@@ -1,5 +1,7 @@
 package com.dahoon.toy.artcollector.review;
 
+import com.dahoon.toy.artcollector.review.dto.ReviewDto;
+import com.dahoon.toy.artcollector.review.dto.ReviewLikeDto;
 import com.dahoon.toy.artcollector.review.entity.Review;
 import com.dahoon.toy.artcollector.review.entity.ReviewLike;
 import com.dahoon.toy.artcollector.review.repository.ReviewLikeRepository;
@@ -129,11 +131,11 @@ public class ReviewServiceTest {
     void 리뷰좋아요(){
         //given
         User user = user1;
-        Review review = reviewList.get(0);
+        Long reviewId = reviewList.get(0).getId();
         ReviewLike reviewLike = null;
         given(reviewLikeRepository.save(reviewLike)).willReturn();
         //when
-        ReviewDto result = reviewService.like(user, review);
+        ReviewLikeDto result = reviewService.toggleReviewLike(user, reviewId);
         //then
 
     }

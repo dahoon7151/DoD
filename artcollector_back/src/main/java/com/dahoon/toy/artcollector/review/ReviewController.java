@@ -1,5 +1,6 @@
 package com.dahoon.toy.artcollector.review;
 
+import com.dahoon.toy.artcollector.review.dto.ReviewDto;
 import com.dahoon.toy.artcollector.user.User;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.enums.ParameterIn;
