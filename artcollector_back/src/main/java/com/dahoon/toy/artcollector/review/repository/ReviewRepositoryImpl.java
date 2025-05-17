@@ -1,15 +1,13 @@
 package com.dahoon.toy.artcollector.review.repository;
 
-import com.dahoon.toy.artcollector.review.ReviewDto;
+import com.dahoon.toy.artcollector.review.dto.ReviewDto;
 import com.dahoon.toy.artcollector.review.entity.QReview;
 import com.dahoon.toy.artcollector.review.entity.Review;
 import com.dahoon.toy.artcollector.user.QUser;
 import com.dahoon.toy.artcollector.user.User;
-import com.querydsl.core.types.Expression;
 import com.querydsl.core.types.Order;
 import com.querydsl.core.types.OrderSpecifier;
 import com.querydsl.core.types.dsl.PathBuilder;
-import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.data.domain.Page;

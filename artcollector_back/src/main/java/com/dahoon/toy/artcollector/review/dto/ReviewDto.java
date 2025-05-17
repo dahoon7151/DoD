@@ -1,11 +1,9 @@
-package com.dahoon.toy.artcollector.review;
+package com.dahoon.toy.artcollector.review.dto;
 
 import com.dahoon.toy.artcollector.review.entity.Review;
 import com.dahoon.toy.artcollector.user.User;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-
-import java.time.LocalDateTime;
 
 @Getter
 @AllArgsConstructor
@@ -15,6 +13,7 @@ public class ReviewDto {
     private String gameId;
     private String writer;
     private String lastModifiedTime;
+    private int likeCount;
 
     public ReviewDto(String content, int rating, String gameId) {
         this.content = content;
@@ -32,7 +31,8 @@ public class ReviewDto {
                 review.getRating(),
                 review.getGameId(),
                 writer,
-                modifiedTime);
+                modifiedTime,
+                review.getLikeCount());
     }
 
     public Review toEntity(User user) {

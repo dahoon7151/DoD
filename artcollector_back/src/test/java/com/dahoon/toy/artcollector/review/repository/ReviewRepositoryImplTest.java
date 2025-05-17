@@ -1,7 +1,7 @@
 package com.dahoon.toy.artcollector.review.repository;
 
 import com.dahoon.toy.artcollector.common.config.QueryDSLConfig;
-import com.dahoon.toy.artcollector.review.ReviewDto;
+import com.dahoon.toy.artcollector.review.dto.ReviewDto;
 import com.dahoon.toy.artcollector.review.entity.Review;
 import com.dahoon.toy.artcollector.user.User;
 import com.dahoon.toy.artcollector.user.UserRepository;
