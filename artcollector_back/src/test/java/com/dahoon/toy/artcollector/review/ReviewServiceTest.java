@@ -15,13 +15,14 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 
@@ -33,7 +34,7 @@ public class ReviewServiceTest {
     @Mock
     private ReviewRepository reviewRepository;
     @Mock
-    private ReviewLikeRepository reviewLikeRepository
+    private ReviewLikeRepository reviewLikeRepository;
     @Mock
     private EntityManager entityManager;
 
@@ -132,11 +133,28 @@ public class ReviewServiceTest {
         //given
         User user = user1;
         Long reviewId = reviewList.get(0).getId();
-        ReviewLike reviewLike = null;
-        given(reviewLikeRepository.save(reviewLike)).willReturn();
+        given(reviewRepository.findById(reviewId)).willReturn(Optional.ofNullable(reviewList.get(0)));
+        given(reviewRepository.likeCountUp(reviewId)).willReturn(reviewList.get(0).getLikeCount()+1);
         //when
         ReviewLikeDto result = reviewService.toggleReviewLike(user, reviewId);
         //then
+        assertTrue(result.isLiked());
+        assertEquals(1, result.getLikeCount());
+    }
 
+    @Test
+    void 리뷰좋아요_취소(){
+        //given
+        User user = user1;
+        Long reviewId = reviewList.get(0).getId();
+        given(reviewRepository.findById(reviewId)).willReturn(Optional.ofNullable(reviewList.get(0)));
+        given(reviewLikeRepository.save(any())).willThrow(DataIntegrityViolationException.class);
+        given(reviewRepository.likeCountDown(reviewId)).willReturn(reviewList.get(0).getLikeCount()-1);
+        //when
+        ReviewLikeDto result = reviewService.toggleReviewLike(user, reviewId);
+        //then
+        Mockito.verify(reviewLikeRepository).deleteByUserAndReview(user1, reviewList.get(0));
+        assertFalse(result.isLiked());
+        assertEquals(-1, result.getLikeCount());
     }
 }

@@ -98,4 +98,18 @@ class ReviewRepositoryImplTest {
         assertEquals("초갓겜", result.getContent());
         assertEquals(10, result.getRating());
     }
+
+    @Test
+    void likeCountUp() {
+        //given
+        //when
+        //then
+    }
+
+    @Test
+    void likeCountDown() {
+        //given
+        //when
+        //then
+    }
 }

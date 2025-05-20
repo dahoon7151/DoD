@@ -12,4 +12,8 @@ public interface ReviewRepositoryCustom {
     void deleteByIdAndCheckUser(Long id, User user);
 
     void updateByIdAndCheckUser(Long id, User user, ReviewDto reviewDto);
+
+    int likeCountUp(Long reviewId);
+
+    int likeCountDown(Long reviewId);
 }

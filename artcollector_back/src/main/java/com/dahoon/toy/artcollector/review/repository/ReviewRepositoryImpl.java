@@ -97,6 +97,50 @@ public class ReviewRepositoryImpl implements ReviewRepositoryCustom{
         }
     }
 
+    @Override
+    public int likeCountUp(Long reviewId) {
+        long updated = queryFactory
+                .update(review)
+                .set(review.likeCount, review.likeCount.add(1))
+                .where(
+                        review.id.eq(reviewId),
+                        review.deleted.isFalse()
+                )
+                .execute();
+
+        if (updated == 0) {
+            throw new EntityNotFoundException();
+        }
+
+        return queryFactory
+                .select(review.likeCount)
+                .from(review)
+                .where(review.id.eq(reviewId))
+                .fetchOne();
+    }
+
+    @Override
+    public int likeCountDown(Long reviewId) {
+        long updated = queryFactory
+                .update(review)
+                .set(review.likeCount, review.likeCount.subtract(1))
+                .where(
+                        review.id.eq(reviewId),
+                        review.deleted.isFalse()
+                )
+                .execute();
+
+        if (updated == 0) {
+            throw new EntityNotFoundException();
+        }
+
+        return queryFactory
+                .select(review.likeCount)
+                .from(review)
+                .where(review.id.eq(reviewId))
+                .fetchOne();
+    }
+
     private List<OrderSpecifier<?>> getOrderSpecifiers(Sort sort) {
         List<OrderSpecifier<?>> orderSpecifiers = new ArrayList<>();
         PathBuilder<Review> pathBuilder = new PathBuilder<>(Review.class, "review");
