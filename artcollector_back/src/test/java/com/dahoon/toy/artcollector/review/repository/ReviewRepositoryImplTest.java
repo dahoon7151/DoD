@@ -100,16 +100,13 @@ class ReviewRepositoryImplTest {
     }
 
     @Test
-    void likeCountUp() {
+    void likeCountUpAndDown() {
         //given
-        //when
-        //then
-    }
-
-    @Test
-    void likeCountDown() {
-        //given
-        //when
-        //then
+        Long reviewId = review1.getId();
+        //when & then
+        int like = reviewRepositoryImpl.likeCountUp(reviewId);
+        assertEquals(1, like);
+        like = reviewRepositoryImpl.likeCountDown(reviewId);
+        assertEquals(0, like);
     }
 }
