@@ -1,5 +1,6 @@
 package com.dahoon.toy.artcollector.review;
 
+import com.dahoon.toy.artcollector.review.dto.ReviewCommentDto;
 import com.dahoon.toy.artcollector.review.dto.ReviewDto;
 import com.dahoon.toy.artcollector.review.dto.ReviewLikeDto;
 import com.dahoon.toy.artcollector.review.entity.Review;
@@ -109,5 +110,10 @@ public class ReviewService {
             log.info("좋아요 취소");
             return ReviewLikeDto.toDto(false, reviewRepository.likeCountDown(reviewId));
         }
+    }
+
+    @Transactional
+    public ReviewCommentDto writeComment(Long reviewId, User user, ReviewCommentDto comment) {
+
     }
 }

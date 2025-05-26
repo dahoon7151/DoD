@@ -1,5 +1,6 @@
 package com.dahoon.toy.artcollector.review;
 
+import com.dahoon.toy.artcollector.review.dto.ReviewCommentDto;
 import com.dahoon.toy.artcollector.review.dto.ReviewDto;
 import com.dahoon.toy.artcollector.review.dto.ReviewLikeDto;
 import com.dahoon.toy.artcollector.review.entity.Review;
@@ -156,5 +157,17 @@ public class ReviewServiceTest {
         Mockito.verify(reviewLikeRepository).deleteByUserAndReview(user1, reviewList.get(0));
         assertFalse(result.isLiked());
         assertEquals(-1, result.getLikeCount());
+    }
+
+    @Test
+    void 리뷰댓글작성(){
+        //given
+        Long reviewId = reviewList.get(0).getId();
+        User user = user1;
+        ReviewCommentDto comment = new ReviewCommentDto("유용해요");
+        //when
+        ReviewCommentDto result = reviewService.writeComment(reviewId, user, comment);
+        //then
+
     }
 }

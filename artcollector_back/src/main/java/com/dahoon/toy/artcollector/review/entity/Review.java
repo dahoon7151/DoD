@@ -37,6 +37,10 @@ public class Review extends BaseEntity {
     @Builder.Default
     private List<ReviewLike> likes = new ArrayList<>();
 
+    @OneToMany(mappedBy = "review", cascade = CascadeType.REMOVE)
+    @Builder.Default
+    private List<ReviewComment> comments = new ArrayList<>();
+
     @Column(nullable = false)
     @Builder.Default
     private int likeCount = 0;
